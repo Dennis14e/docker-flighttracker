@@ -3,6 +3,7 @@ version: '3'
 services:
   dump1090:
     build: dump1090
+    image: dennis14e/ft-dump1090
     restart: unless-stopped
     privileged: true
     ports:
@@ -12,6 +13,7 @@ services:
 
   fr24feed:
     build: fr24feed
+    image: dennis14e/ft-fr24feed
     restart: unless-stopped
     depends_on:
       - dump1090
