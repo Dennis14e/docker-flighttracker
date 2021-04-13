@@ -11,8 +11,8 @@ WORKDIR /app
 RUN git clone --depth 1 https://github.com/antirez/dump1090.git . && \
     make
 
-RUN sed -i 's/CenterLat=45.0;/CenterLat={{GMAP_CENTER_LAT}}/g' /app/gmap.html && \
-    sed -i 's/CenterLon=9.0;/CenterLon={{GMAP_CENTER_LNG}}/g' /app/gmap.html
+RUN sed -i 's/CenterLat=45.0;/CenterLat={{GMAP_CENTER_LAT}};/g' /app/gmap.html && \
+    sed -i 's/CenterLon=9.0;/CenterLon={{GMAP_CENTER_LNG}};/g' /app/gmap.html
 
 # Base
 FROM alpine:3.13 AS release
