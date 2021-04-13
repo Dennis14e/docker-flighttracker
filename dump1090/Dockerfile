@@ -1,5 +1,5 @@
 # Builder
-FROM alpine:3.12 AS builder
+FROM alpine:3.13 AS builder
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>"
 
 # Packages
@@ -12,7 +12,7 @@ RUN git clone --depth 1 https://github.com/antirez/dump1090.git . && \
     make
 
 # Base
-FROM alpine:3.12 AS release
+FROM alpine:3.13 AS release
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>"
 
 # Packages

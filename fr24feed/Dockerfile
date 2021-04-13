@@ -1,5 +1,5 @@
 # Builder
-FROM alpine:3.12 AS builder
+FROM alpine:3.13 AS builder
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>"
 
 # fr24feed
@@ -12,7 +12,7 @@ RUN chmod 777 /tmp/dl-fr24feed.sh && \
 
 
 # Base
-FROM alpine:3.12 AS release
+FROM alpine:3.13 AS release
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>"
 
 # Packages
