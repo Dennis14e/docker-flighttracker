@@ -10,6 +10,10 @@ services:
       - "8080:8080"
     devices:
       - /dev/bus/usb:/dev/bus/usb
+    environment:
+      - GMAP_STYLE=new
+      - GMAP_CENTER_LAT=52.518611
+      - GMAP_CENTER_LNG=13.408333
 
   fr24feed:
     build: fr24feed
@@ -19,3 +23,5 @@ services:
       - dump1090
     ports:
       - "8754:8754"
+    environment:
+    - SHARING_KEY=
