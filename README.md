@@ -71,5 +71,6 @@ docker run \
   -it --rm \
   -p 8754:8754 \
   -e SHARING_KEY=REPLACE \
+  -e DUMP1090_HOST=dump1090:30002 \
   dennis14e/ft-fr24feed:latest
 ```
