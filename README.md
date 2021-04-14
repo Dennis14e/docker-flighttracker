@@ -16,6 +16,9 @@ Tested on:
 - Raspberry Pi 3B
 - Raspberry Pi Zero W (`dump1090` runs well, `fr24feed` is not particularly stable)
 
+Tested adapters:
+- 0bda:2838 Realtek Semiconductor Corp. RTL2838 DVB-T
+
 
 ## Environment variables
 
