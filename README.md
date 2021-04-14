@@ -4,19 +4,19 @@
 ![ft-dump1090 pulls](https://img.shields.io/docker/pulls/dennis14e/ft-dump1090?label=ft-dump1090%20pulls)
 ![ft-fr24feed pulls](https://img.shields.io/docker/pulls/dennis14e/ft-fr24feed?label=ft-fr24feed%20pulls)
 
-Supported architectures:
+**Supported architectures:**
 - linux/amd64
 - linux/arm/v6
 - linux/arm/v7
 - linux/arm64
 - linux/386
 
-Tested on:
+**Tested on:**
 - Raspberry Pi 4B
 - Raspberry Pi 3B
 - Raspberry Pi Zero W (`dump1090` runs well, `fr24feed` is not particularly stable)
 
-Tested adapters:
+**Tested adapters:**
 - 0bda:2838 Realtek Semiconductor Corp. RTL2838 DVB-T
 
 
