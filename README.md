@@ -1,8 +1,8 @@
 # Docker Flighttracker
 
 [![Build images](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build.yml/badge.svg)](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build.yml)
-![ft-dump1090 pulls](https://img.shields.io/docker/pulls/dennis14e/ft-dump1090?label=ft-dump1090%20pulls)
-![ft-fr24feed pulls](https://img.shields.io/docker/pulls/dennis14e/ft-fr24feed?label=ft-fr24feed%20pulls)
+[![ft-dump1090 pulls](https://img.shields.io/docker/pulls/dennis14e/ft-dump1090?label=ft-dump1090%20pulls)](https://hub.docker.com/r/dennis14e/ft-dump1090)
+[![ft-fr24feed pulls](https://img.shields.io/docker/pulls/dennis14e/ft-fr24feed?label=ft-fr24feed%20pulls)](https://hub.docker.com/r/dennis14e/ft-fr24feed)
 
 **Supported architectures:**
 - linux/amd64
