@@ -24,3 +24,4 @@ services:
       - "8754:8754"
     environment:
     - SHARING_KEY=
+    - DUMP1090_HOST=dump1090:30002
