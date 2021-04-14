@@ -5,7 +5,6 @@ services:
     build: dump1090
     image: dennis14e/ft-dump1090
     restart: unless-stopped
-    privileged: true
     ports:
       - "8080:8080"
     devices:
