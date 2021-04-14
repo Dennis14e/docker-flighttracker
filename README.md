@@ -19,6 +19,14 @@
 **Tested adapters:**
 - 0bda:2838 Realtek Semiconductor Corp. RTL2838 DVB-T
 
+**Used software:**
+- [dump1090](https://github.com/antirez/dump1090)
+- [fr24feed](https://www.flightradar24.com/share-your-data)
+- [Alpine Linux](https://www.alpinelinux.org/)
+- [OpenStreetMap](https://www.openstreetmap.org/)
+- [Font Awesome](https://fontawesome.com/)
+- [Leaflet](https://github.com/Leaflet/Leaflet)
+
 
 ## Environment variables
 
