@@ -2,7 +2,7 @@ version: '3'
 
 services:
   dump1090:
-    build: dump1090
+    # build: dump1090
     image: dennis14e/ft-dump1090
     restart: unless-stopped
     ports:
@@ -16,7 +16,7 @@ services:
 
   # optional
   fr24feed:
-    build: fr24feed
+    # build: fr24feed
     image: dennis14e/ft-fr24feed
     restart: unless-stopped
     depends_on:
@@ -29,10 +29,11 @@ services:
 
 #  # optinal
 #  adsb2influx:
-#    build: adsb2influx
+#    # build: adsb2influx
 #    image: dennis14e/ft-adsb2influx
 #    restart: unless-stopped
-#    depends_on: dump1090
+#    depends_on:
+#      - dump1090
 #    environment:
 #      - DUMP1090_HOST=dump1090
 #      - DUMP1090_PORT=30003
