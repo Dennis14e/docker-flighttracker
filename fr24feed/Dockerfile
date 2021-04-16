@@ -29,6 +29,10 @@ COPY fr24feed.ini /etc/fr24feed.ini
 RUN chmod 777 /entrypoint.sh /usr/lib/fr24/fr24feed
 RUN chmod 644 /etc/fr24feed.ini
 
+# ENV
+ENV SHARING_KEY=
+ENV DUMP1090_HOST=dump1090:30002
+
 # Expose
 EXPOSE 8754
 

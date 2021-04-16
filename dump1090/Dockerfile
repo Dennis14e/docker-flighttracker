@@ -33,6 +33,11 @@ COPY gmap.html /app/gmap_new.html
 RUN chmod 777 /entrypoint.sh /app/dump1090
 RUN chmod 644 /app/gmap*.html
 
+# ENV
+ENV GMAP_STYLE=old
+ENV GMAP_CENTER_LAT=45.0
+ENV GMAP_CENTER_LNG=9.0
+
 # Expose
 EXPOSE 8080 30001 30002 30003
 
