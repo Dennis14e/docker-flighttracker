@@ -34,5 +34,8 @@ ENV INFLUX_PASS=
 ENV INFLUX_DB=adsb
 ENV SEND_INTERVAL=60
 
+# Entrypoint
+ENTRYPOINT [ "python3" ]
+
 # CMD
-CMD [ "python3", "/app/adsb2influx.py", "-ds", $DUMP1090_HOST, "-dp", $DUMP1090_PORT, "-iu", $INFLUX_URL, "-in", $INFLUX_USER, "-ip", $INFLUX_PASS, "-db", $INFLUX_DB, "-si", $SEND_INTERVAL ]
+CMD [ "/app/adsb2influx.py", "-ds", $DUMP1090_HOST, "-dp", $DUMP1090_PORT, "-iu", $INFLUX_URL, "-in", $INFLUX_USER, "-ip", $INFLUX_PASS, "-db", $INFLUX_DB, "-si", $SEND_INTERVAL ]
