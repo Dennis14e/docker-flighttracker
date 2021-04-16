@@ -14,6 +14,7 @@ services:
       - GMAP_CENTER_LAT=45.0
       - GMAP_CENTER_LNG=9.0
 
+  # optional
   fr24feed:
     build: fr24feed
     image: dennis14e/ft-fr24feed
@@ -25,3 +26,18 @@ services:
     environment:
       - SHARING_KEY=
       - DUMP1090_HOST=dump1090:30002
+
+#  # optinal
+#  adsb2influx:
+#    build: adsb2influx
+#    image: dennis14e/ft-adsb2influx
+#    restart: unless-stopped
+#    depends_on: dump1090
+#    environment:
+#      - DUMP1090_HOST=dump1090
+#      - DUMP1090_PORT=30003
+#      - INFLUX_URL=
+#      - INFLUX_USER=
+#      - INFLUX_PASS=
+#      - INFLUX_DB=adsb
+#      - SEND_INTERVAL=60

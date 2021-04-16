@@ -22,6 +22,7 @@
 **Used software:**
 - [dump1090](https://github.com/antirez/dump1090)
 - [fr24feed](https://www.flightradar24.com/share-your-data)
+- [adsb2influx](https://github.com/slintak/adsb2influx)
 - [Alpine Linux](https://www.alpinelinux.org/)
 - [OpenStreetMap](https://www.openstreetmap.org/)
 - [Font Awesome](https://fontawesome.com/)
@@ -30,13 +31,20 @@
 
 ## Environment variables
 
-| Image    | Environment variable | Default        | Description               |
-|----------|----------------------|----------------|---------------------------|
-| dump1090 | GMAP_STYLE           | old            | Map style old/new         |
-| dump1090 | GMAP_CENTER_LAT      | 45.0           | Map center latitude       |
-| dump1090 | GMAP_CENTER_LNG      | 9.0            | Map center longitude      |
-| fr24feed | SHARING_KEY          |                | Flightradar24 sharing key |
-| fr24feed | DUMP1090_HOST        | dump1090:30002 | dump1090 Host:Port        |
+| Image       | Environment variable | Default        | Description               |
+|-------------|----------------------|----------------|---------------------------|
+| dump1090    | GMAP_STYLE           | old            | Map style old/new         |
+| dump1090    | GMAP_CENTER_LAT      | 45.0           | Map center latitude       |
+| dump1090    | GMAP_CENTER_LNG      | 9.0            | Map center longitude      |
+| fr24feed    | SHARING_KEY          |                | Flightradar24 sharing key |
+| fr24feed    | DUMP1090_HOST        | dump1090:30002 | dump1090 Host:Port        |
+| adsb2influx | DUMP1090_HOST        | dump1090       | dump1090 Host             |
+| adsb2influx | DUMP1090_PORT        | 30003          | dump1090 Port             |
+| adsb2influx | INFLUX_URL           |                | Influx DB URL             |
+| adsb2influx | INFLUX_USER          |                | Influx DB Username        |
+| adsb2influx | INFLUX_PASS          |                | Influx DB Password        |
+| adsb2influx | INFLUX_DB            | adsb           | Influx DB Database name   |
+| adsb2influx | SEND_INTERVAL        | 60             | Data send interval (sec)  |
 
 
 ## Run with docker-compose
@@ -44,7 +52,7 @@
 ### Usage
 
 1. Download `docker-compose.yml`
-2. Set ports and environment variables
+2. Set services, ports and environment variables
 3. ???
 4. Profit!
 
@@ -80,5 +88,21 @@ docker run \
   -p 8754:8754 \
   -e SHARING_KEY=REPLACE \
   -e DUMP1090_HOST=dump1090:30002 \
+  dennis14e/ft-fr24feed:latest
+```
+
+
+## Run adsb2influx
+
+```
+docker run \
+  -it --rm \
+  -e DUMP1090_HOST=dump1090 \
+  -e DUMP1090_PORT=30003 \
+  -e INFLUX_URL= \
+  -e INFLUX_USER= \
+  -e INFLUX_PASS= \
+  -e INFLUX_DB=adsb \
+  -e SEND_INTERVAL=60 \
   dennis14e/ft-fr24feed:latest
 ```
