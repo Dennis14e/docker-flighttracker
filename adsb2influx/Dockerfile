@@ -23,6 +23,8 @@ WORKDIR /app
 
 COPY --from=builder /app/adsb2influx.py /app/adsb2influx.py
 
+RUN chmod 750 /app/adsb2influx.py
+
 # ENV
 ENV DUMP1090_HOST=dump1090
 ENV DUMP1090_PORT=30003
@@ -33,4 +35,4 @@ ENV INFLUX_DB=adsb
 ENV SEND_INTERVAL=60
 
 # CMD
-CMD [ "python3", "/app/adsb2influx.py", "-ds", $DUMP1090_HOST, "-dp", $DUMP1090_PORT, "-iu", $INFLUX_URL, "-in", $INFLUX_USER "-ip", $INFLUX_PASS, "-db", $INFLUX_DB "-si", $SEND_INTERVAL ]
+CMD [ "/app/adsb2influx.py", "-ds", $DUMP1090_HOST, "-dp", $DUMP1090_PORT, "-iu", $INFLUX_URL, "-in", $INFLUX_USER "-ip", $INFLUX_PASS, "-db", $INFLUX_DB "-si", $SEND_INTERVAL ]
