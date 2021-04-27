@@ -11,7 +11,8 @@ WORKDIR /app
 RUN git clone --depth 1 https://github.com/antirez/dump1090.git . && \
     make
 
-RUN sed -i 's/CenterLat=45.0;/CenterLat={{GMAP_CENTER_LAT}};/g' /app/gmap.html && \
+RUN sed -i 's/<head>/<head><title>{{TITLE}}</title>/g' /app/gmap.html && \
+    sed -i 's/CenterLat=45.0;/CenterLat={{GMAP_CENTER_LAT}};/g' /app/gmap.html && \
     sed -i 's/CenterLon=9.0;/CenterLon={{GMAP_CENTER_LNG}};/g' /app/gmap.html
 
 # Base
@@ -34,6 +35,7 @@ RUN chmod 777 /entrypoint.sh /app/dump1090
 RUN chmod 644 /app/gmap*.html
 
 # ENV
+ENV TITLE=dump1090
 ENV GMAP_STYLE=old
 ENV GMAP_CENTER_LAT=45.0
 ENV GMAP_CENTER_LNG=9.0

@@ -31,20 +31,29 @@
 
 ## Environment variables
 
-| Image       | Environment variable | Default        | Description               |
-|-------------|----------------------|----------------|---------------------------|
-| dump1090    | GMAP_STYLE           | old            | Map style old/new         |
-| dump1090    | GMAP_CENTER_LAT      | 45.0           | Map center latitude       |
-| dump1090    | GMAP_CENTER_LNG      | 9.0            | Map center longitude      |
-| fr24feed    | SHARING_KEY          |                | Flightradar24 sharing key |
-| fr24feed    | DUMP1090_HOST        | dump1090:30002 | dump1090 Host:Port        |
-| adsb2influx | DUMP1090_HOST        | dump1090       | dump1090 Host             |
-| adsb2influx | DUMP1090_PORT        | 30003          | dump1090 Port             |
-| adsb2influx | INFLUX_URL           |                | Influx DB URL             |
-| adsb2influx | INFLUX_USER          |                | Influx DB Username        |
-| adsb2influx | INFLUX_PASS          |                | Influx DB Password        |
-| adsb2influx | INFLUX_DB            | adsb           | Influx DB Database name   |
-| adsb2influx | SEND_INTERVAL        | 60             | Data send interval (sec)  |
+| Image          | Environment variable | Default        | Description               |
+|----------------|----------------------|----------------|---------------------------|
+| ft-dump1090    | TITLE                | dump1090       | Page title                |
+| ft-dump1090    | GMAP_STYLE           | old            | Map style old/new         |
+| ft-dump1090    | GMAP_CENTER_LAT      | 45.0           | Map center latitude       |
+| ft-dump1090    | GMAP_CENTER_LNG      | 9.0            | Map center longitude      |
+| ft-fr24feed    | SHARING_KEY          |                | Flightradar24 sharing key |
+| ft-fr24feed    | DUMP1090_HOST        | dump1090:30002 | dump1090 Host:Port        |
+| ft-fr24feed    | RECEIVER             | avr-tcp        | Receiver type             |
+| ft-fr24feed    | BS                   | no             | BS                        |
+| ft-fr24feed    | RAW                  | no             | RAW                       |
+| ft-fr24feed    | LOGMODE              | 0              | Logging mode              |
+| ft-fr24feed    | WINDOWMODE           | 0              | Window mode               |
+| ft-fr24feed    | MPX                  | no             | MPX                       |
+| ft-fr24feed    | MLAT                 | yes            | MLAT                      |
+| ft-fr24feed    | MLAT_WITHOUT_GPS     | yes            | MLAT without GPS          |
+| ft-adsb2influx | DUMP1090_HOST        | dump1090       | dump1090 Host             |
+| ft-adsb2influx | DUMP1090_PORT        | 30003          | dump1090 Port             |
+| ft-adsb2influx | INFLUX_URL           |                | Influx DB URL             |
+| ft-adsb2influx | INFLUX_USER          |                | Influx DB Username        |
+| ft-adsb2influx | INFLUX_PASS          |                | Influx DB Password        |
+| ft-adsb2influx | INFLUX_DB            | adsb           | Influx DB Database name   |
+| ft-adsb2influx | SEND_INTERVAL        | 60             | Data send interval (sec)  |
 
 
 ## Run with docker-compose
