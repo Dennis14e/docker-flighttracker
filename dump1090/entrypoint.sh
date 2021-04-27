@@ -10,7 +10,7 @@ GMAP_CENTER_LNG="${GMAP_CENTER_LNG:-9.0}"
 if [ $GMAP_STYLE != "old" ]
 then
     # Overwrite old gmap tmpl
-    mv /app/gmap_new.html /app/gmap.html
+    mv -f /app/gmap_new.html /app/gmap.html
 fi
 
 # Set variables
