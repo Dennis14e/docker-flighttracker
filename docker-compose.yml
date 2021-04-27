@@ -27,7 +27,7 @@ services:
       - SHARING_KEY=
       - DUMP1090_HOST=dump1090:30002
 
-#  # optinal
+#  # optional
 #  adsb2influx:
 #    # build: adsb2influx
 #    image: dennis14e/ft-adsb2influx
