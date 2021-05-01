@@ -16,7 +16,7 @@ FROM alpine:3.13 AS release
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>"
 
 # Packages
-RUN apk add bash sed libc6-compat libstdc++6
+RUN apk add --no-cache bash sed libc6-compat libstdc++6
 
 # fr24feed
 WORKDIR /usr/lib/fr24

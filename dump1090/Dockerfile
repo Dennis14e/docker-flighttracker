@@ -3,7 +3,7 @@ FROM alpine:3.13 AS builder
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>"
 
 # Packages
-RUN apk add build-base git librtlsdr-dev
+RUN apk add --no-cache build-base git librtlsdr-dev
 
 # dump1090
 WORKDIR /app
@@ -20,7 +20,7 @@ FROM alpine:3.13 AS release
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>"
 
 # Packages
-RUN apk add bash sed rtl-sdr
+RUN apk add --no-cache bash sed rtl-sdr
 
 # dump1090
 WORKDIR /app
