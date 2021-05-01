@@ -8,7 +8,7 @@ RUN apk add git
 # adsb2influx
 WORKDIR /app
 
-RUN git clone --depth 1 https://github.com/slintak/adsb2influx.git .
+RUN git clone --depth 1 https://github.com/Dennis14e/adsb2influx.git .
 
 
 # Base
