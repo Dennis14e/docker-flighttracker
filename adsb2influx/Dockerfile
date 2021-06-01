@@ -1,37 +1,41 @@
 # Builder
-FROM alpine:3.13 AS builder
+FROM python:3.9-alpine3.13 AS builder
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>"
 
-# Packages
-RUN apk add --no-cache git
-
-# adsb2influx
+# Workdir
 WORKDIR /app
 
-RUN git clone --depth 1 https://github.com/slintak/adsb2influx.git . && \
-    chmod +x adsb2influx.py
+# Packages
+COPY ./requirements.txt /app/requirements.txt
+
+RUN mkdir -p /app/python-packages && \
+    pip install --no-cache-dir --prefix=/app/python-packages -r /app/requirements.txt
 
 
 # Base
-FROM alpine:3.13 AS release
+FROM python:3.9-alpine3.13 AS release
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>"
 
-# Packages
-RUN apk add --no-cache ca-certificates python3 py3-requests
-
-# adsb2influx
+# Workdir
 WORKDIR /app
 
-COPY --from=builder /app/adsb2influx.py /app/adsb2influx.py
+# Packages
+COPY --from=builder /app/python-packages /usr/local
+
+# adsb2influx
+COPY ./adsb2influx.py /app/adsb2influx.py
+
+RUN chmod +x /app/adsb2influx.py
 
 # ENV
 ENV DUMP1090_HOST=dump1090
 ENV DUMP1090_PORT=30003
 ENV INFLUX_URL=
-ENV INFLUX_USER=
-ENV INFLUX_PASS=
-ENV INFLUX_DB=adsb
+ENV INFLUX_TOKEN=
+ENV INFLUX_ORG=
+ENV INFLUX_BUCKET=adsb
+ENV INFLUX_MEASUREMENT=messages
 ENV SEND_INTERVAL=60
 
 # CMD
-CMD [ "sh", "-c", "python3 adsb2influx.py -ds $DUMP1090_HOST -dp $DUMP1090_PORT -iu $INFLUX_URL -in $INFLUX_USER -ip $INFLUX_PASS -db $INFLUX_DB -si $SEND_INTERVAL" ]
+CMD [ "sh", "-c", "python3 adsb2influx.py -dh $DUMP1090_HOST -dp $DUMP1090_PORT -iu $INFLUX_URL -it $INFLUX_TOKEN -io $INFLUX_ORG -ib $INFLUX_BUCKET -im $INFLUX_MEASUREMENT -si $SEND_INTERVAL" ]

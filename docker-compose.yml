@@ -38,7 +38,7 @@ services:
 #      - DUMP1090_HOST=dump1090
 #      - DUMP1090_PORT=30003
 #      - INFLUX_URL=
-#      - INFLUX_USER=
-#      - INFLUX_PASS=
-#      - INFLUX_DB=adsb
+#      - INFLUX_TOKEN=
+#      - INFLUX_ORG=
+#      - INFLUX_BUCKET=adsb
 #      - SEND_INTERVAL=60

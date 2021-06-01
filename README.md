@@ -22,11 +22,11 @@
 **Used software:**
 - [dump1090](https://github.com/antirez/dump1090)
 - [fr24feed](https://www.flightradar24.com/share-your-data)
-- [adsb2influx](https://github.com/slintak/adsb2influx)
 - [Alpine Linux](https://www.alpinelinux.org/)
 - [OpenStreetMap](https://www.openstreetmap.org/)
 - [Font Awesome](https://fontawesome.com/)
 - [Leaflet](https://github.com/Leaflet/Leaflet)
+- [adsb2influx](https://github.com/slintak/adsb2influx) (own fork, only for InfluxDB 2.0)
 
 
 ## Environment variables
@@ -49,10 +49,11 @@
 | ft-fr24feed    | MLAT_WITHOUT_GPS     | yes            | MLAT without GPS          |
 | ft-adsb2influx | DUMP1090_HOST        | dump1090       | dump1090 Host             |
 | ft-adsb2influx | DUMP1090_PORT        | 30003          | dump1090 Port             |
-| ft-adsb2influx | INFLUX_URL           |                | Influx DB URL             |
-| ft-adsb2influx | INFLUX_USER          |                | Influx DB Username        |
-| ft-adsb2influx | INFLUX_PASS          |                | Influx DB Password        |
-| ft-adsb2influx | INFLUX_DB            | adsb           | Influx DB Database name   |
+| ft-adsb2influx | INFLUX_URL           |                | InfluxDB URL              |
+| ft-adsb2influx | INFLUX_TOKEN         |                | InfluxDB API token        |
+| ft-adsb2influx | INFLUX_ORG           |                | InfluxDB organisation     |
+| ft-adsb2influx | INFLUX_BUCKET        | adsb           | InfluxDB bucket           |
+| ft-adsb2influx | INFLUX_MEASUREMENT   | messages       | InfluxDB measurement      |
 | ft-adsb2influx | SEND_INTERVAL        | 60             | Data send interval (sec)  |
 
 
@@ -109,9 +110,9 @@ docker run \
   -e DUMP1090_HOST=dump1090 \
   -e DUMP1090_PORT=30003 \
   -e INFLUX_URL= \
-  -e INFLUX_USER= \
-  -e INFLUX_PASS= \
-  -e INFLUX_DB=adsb \
+  -e INFLUX_TOKEN= \
+  -e INFLUX_ORG= \
+  -e INFLUX_BUCKET=adsb \
   -e SEND_INTERVAL=60 \
-  dennis14e/ft-fr24feed:latest
+  dennis14e/ft-adsb2influx:latest
 ```
