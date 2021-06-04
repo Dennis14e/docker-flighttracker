@@ -14,7 +14,11 @@ RUN mkdir -p /app/python-packages && \
 
 # Base
 FROM python:3.9-alpine3.13 AS release
-LABEL maintainer="Dennis Neufeld <git@dneufeld.net>"
+LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
+      org.opencontainers.image.authors="Dennis Neufeld <git@dneufeld.net>" \
+      org.opencontainers.image.url="https://github.com/Dennis14e/docker-flightradar" \
+      org.opencontainers.image.source="https://github.com/Dennis14e/docker-flightradar" \
+      org.opencontainers.image.licenses="MIT"
 
 # Workdir
 WORKDIR /app
