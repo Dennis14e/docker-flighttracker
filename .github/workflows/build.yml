@@ -13,7 +13,6 @@ jobs:
     env:
       DOCKER_PUSH: false
       DOCKER_HUB_USERNAME: dennis14e
-      DOCKER_GHCR_USERNAME: dennis14e
       PLATFORMS: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/386
     strategy:
       fail-fast: false
@@ -52,14 +51,6 @@ jobs:
           username: ${{ env.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Login to GitHub Container Registry
-        if: env.DOCKER_PUSH == 'true'
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
@@ -70,9 +61,7 @@ jobs:
           platforms: ${{ env.PLATFORMS }}
           pull: true
           push: ${{ env.DOCKER_PUSH }}
-          tags: |
-            ${{ env.DOCKER_HUB_USERNAME }}/ft-${{ matrix.DOCKERIMAGE }}:latest
-            ghcr.io/${{ env.DOCKER_GHCR_USERNAME }}/ft-${{ matrix.DOCKERIMAGE }}:latest
+          tags: ${{ env.DOCKER_HUB_USERNAME }}/ft-${{ matrix.DOCKERIMAGE }}:latest
 
       - name: Move cache
         run: |
