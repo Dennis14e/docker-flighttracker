@@ -3,12 +3,17 @@ FROM alpine:3.13 AS builder
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>"
 
 # Packages
-RUN apk add --no-cache build-base git librtlsdr-dev libbsd-dev ncurses-dev zlib-dev argp-standalone
+RUN apk add --no-cache build-base git librtlsdr-dev ncurses-dev zlib-dev argp-standalone
 
-# dump1090
+# readsb
 WORKDIR /app
 
 RUN git clone --depth 1 https://github.com/wiedehopf/readsb.git . && \
+    mkdir patches
+
+COPY patches/*.patch patches/
+
+RUN git apply patches/*.patch && \
     make RTLSDR=yes
 
 # Base
@@ -20,7 +25,7 @@ LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.licenses="MIT"
 
 # Packages
-RUN apk add --no-cache bash rtl-sdr libbsd ncurses zlib
+RUN apk add --no-cache bash rtl-sdr ncurses zlib
 
 # readsb
 WORKDIR /app
