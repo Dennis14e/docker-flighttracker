@@ -63,10 +63,11 @@
 
 ### Usage
 
-1. Download `docker-compose.yml`
-2. Set services, ports and environment variables
-3. ???
-4. Profit!
+1. Download `docker-compose.example.yml`
+2. Rename `docker-compose.example.yml` to `docker-compose.yml`
+3. Edit `docker-compose.yml` and set services, ports and environment variables
+4. ???
+5. Profit!
 
 ### Commands
 
