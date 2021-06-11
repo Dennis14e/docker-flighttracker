@@ -3,7 +3,7 @@ FROM alpine:3.13 AS builder
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>"
 
 # Packages
-RUN apk add --no-cache build-base git librtlsdr-dev
+RUN apk add --no-cache build-base git librtlsdr-dev zlib-dev
 
 # dump1090
 WORKDIR /app
@@ -20,7 +20,7 @@ LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.licenses="MIT"
 
 # Packages
-RUN apk add --no-cache bash rtl-sdr
+RUN apk add --no-cache bash rtl-sdr zlib
 
 # readsb
 WORKDIR /app
