@@ -24,6 +24,7 @@
 **Used software:**
 - [dump1090](https://github.com/antirez/dump1090)
 - [fr24feed](https://www.flightradar24.com/share-your-data)
+- [readsb](https://github.com/wiedehopf/readsb)
 - [Alpine Linux](https://www.alpinelinux.org/)
 - [OpenStreetMap](https://www.openstreetmap.org/)
 - [Font Awesome](https://fontawesome.com/)
