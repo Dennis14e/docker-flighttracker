@@ -4,6 +4,7 @@
 [![Build develop images](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build-develop.yml/badge.svg)](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build-develop.yml)
 [![dump1090 pulls](https://img.shields.io/docker/pulls/flighttracker/dump1090?label=dump1090%20pulls)](https://hub.docker.com/r/flighttracker/dump1090)
 [![fr24feed pulls](https://img.shields.io/docker/pulls/flighttracker/fr24feed?label=fr24feed%20pulls)](https://hub.docker.com/r/flighttracker/fr24feed)
+[![adsb2influx pulls](https://img.shields.io/docker/pulls/flighttracker/adsb2influx?label=adsb2influx%20pulls)](https://hub.docker.com/r/flighttracker/adsb2influx)
 
 **Supported architectures:**
 - linux/amd64
