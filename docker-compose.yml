@@ -3,7 +3,7 @@ version: '3'
 services:
   dump1090:
     # build: dump1090
-    image: dennis14e/ft-dump1090
+    image: flighttracker/dump1090
     restart: unless-stopped
     ports:
       - "8080:8080"
@@ -17,7 +17,7 @@ services:
   # optional
   fr24feed:
     # build: fr24feed
-    image: dennis14e/ft-fr24feed
+    image: flighttracker/fr24feed
     restart: unless-stopped
     depends_on:
       - dump1090
@@ -30,7 +30,7 @@ services:
 #  # optional
 #  adsb2influx:
 #    # build: adsb2influx
-#    image: dennis14e/ft-adsb2influx
+#    image: flighttracker/adsb2influx
 #    restart: unless-stopped
 #    depends_on:
 #      - dump1090

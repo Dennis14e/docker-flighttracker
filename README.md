@@ -1,8 +1,8 @@
 # Docker Flighttracker
 
-[![Build images](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build.yml/badge.svg)](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build.yml)
-[![ft-dump1090 pulls](https://img.shields.io/docker/pulls/dennis14e/ft-dump1090?label=ft-dump1090%20pulls)](https://hub.docker.com/r/dennis14e/ft-dump1090)
-[![ft-fr24feed pulls](https://img.shields.io/docker/pulls/dennis14e/ft-fr24feed?label=ft-fr24feed%20pulls)](https://hub.docker.com/r/dennis14e/ft-fr24feed)
+[![Build stable images](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build.yml/badge.svg)](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build-stable.yml)
+[![dump1090 pulls](https://img.shields.io/docker/pulls/flighttracker/dump1090?label=dump1090%20pulls)](https://hub.docker.com/r/flighttracker/dump1090)
+[![fr24feed pulls](https://img.shields.io/docker/pulls/flighttracker/fr24feed?label=fr24feed%20pulls)](https://hub.docker.com/r/flighttracker/fr24feed)
 
 **Supported architectures:**
 - linux/amd64
@@ -31,30 +31,30 @@
 
 ## Environment variables
 
-| Image          | Environment variable | Default        | Description               |
-|----------------|----------------------|----------------|---------------------------|
-| ft-dump1090    | TITLE                | dump1090       | Page title                |
-| ft-dump1090    | GMAP_STYLE           | old            | Map style old/new         |
-| ft-dump1090    | GMAP_CENTER_LAT      | 45.0           | Map center latitude       |
-| ft-dump1090    | GMAP_CENTER_LNG      | 9.0            | Map center longitude      |
-| ft-fr24feed    | SHARING_KEY          |                | Flightradar24 sharing key |
-| ft-fr24feed    | DUMP1090_HOST        | dump1090:30002 | dump1090 Host:Port        |
-| ft-fr24feed    | RECEIVER             | avr-tcp        | Receiver type             |
-| ft-fr24feed    | BS                   | no             | BS                        |
-| ft-fr24feed    | RAW                  | no             | RAW                       |
-| ft-fr24feed    | LOGMODE              | 0              | Logging mode              |
-| ft-fr24feed    | WINDOWMODE           | 0              | Window mode               |
-| ft-fr24feed    | MPX                  | no             | MPX                       |
-| ft-fr24feed    | MLAT                 | yes            | MLAT                      |
-| ft-fr24feed    | MLAT_WITHOUT_GPS     | yes            | MLAT without GPS          |
-| ft-adsb2influx | DUMP1090_HOST        | dump1090       | dump1090 Host             |
-| ft-adsb2influx | DUMP1090_PORT        | 30003          | dump1090 Port             |
-| ft-adsb2influx | INFLUX_URL           |                | InfluxDB URL              |
-| ft-adsb2influx | INFLUX_TOKEN         |                | InfluxDB API token        |
-| ft-adsb2influx | INFLUX_ORG           |                | InfluxDB organisation     |
-| ft-adsb2influx | INFLUX_BUCKET        | adsb           | InfluxDB bucket           |
-| ft-adsb2influx | INFLUX_MEASUREMENT   | messages       | InfluxDB measurement      |
-| ft-adsb2influx | SEND_INTERVAL        | 60             | Data send interval (sec)  |
+| Image       | Environment variable | Default        | Description               |
+|-------------|----------------------|----------------|---------------------------|
+| dump1090    | TITLE                | dump1090       | Page title                |
+| dump1090    | GMAP_STYLE           | old            | Map style old/new         |
+| dump1090    | GMAP_CENTER_LAT      | 45.0           | Map center latitude       |
+| dump1090    | GMAP_CENTER_LNG      | 9.0            | Map center longitude      |
+| fr24feed    | SHARING_KEY          |                | Flightradar24 sharing key |
+| fr24feed    | DUMP1090_HOST        | dump1090:30002 | dump1090 Host:Port        |
+| fr24feed    | RECEIVER             | avr-tcp        | Receiver type             |
+| fr24feed    | BS                   | no             | BS                        |
+| fr24feed    | RAW                  | no             | RAW                       |
+| fr24feed    | LOGMODE              | 0              | Logging mode              |
+| fr24feed    | WINDOWMODE           | 0              | Window mode               |
+| fr24feed    | MPX                  | no             | MPX                       |
+| fr24feed    | MLAT                 | yes            | MLAT                      |
+| fr24feed    | MLAT_WITHOUT_GPS     | yes            | MLAT without GPS          |
+| adsb2influx | DUMP1090_HOST        | dump1090       | dump1090 Host             |
+| adsb2influx | DUMP1090_PORT        | 30003          | dump1090 Port             |
+| adsb2influx | INFLUX_URL           |                | InfluxDB URL              |
+| adsb2influx | INFLUX_TOKEN         |                | InfluxDB API token        |
+| adsb2influx | INFLUX_ORG           |                | InfluxDB organisation     |
+| adsb2influx | INFLUX_BUCKET        | adsb           | InfluxDB bucket           |
+| adsb2influx | INFLUX_MEASUREMENT   | messages       | InfluxDB measurement      |
+| adsb2influx | SEND_INTERVAL        | 60             | Data send interval (sec)  |
 
 
 ## Run with docker-compose
@@ -86,7 +86,7 @@ docker run \
   -e GMAP_STYLE=new \
   -e GMAP_CENTER_LAT=45.0 \
   -e GMAP_CENTER_LNG=9.0 \
-  dennis14e/ft-dump1090:latest
+  flighttracker/dump1090:latest
 ```
 
 
@@ -98,7 +98,7 @@ docker run \
   -p 8754:8754 \
   -e SHARING_KEY=REPLACE \
   -e DUMP1090_HOST=dump1090:30002 \
-  dennis14e/ft-fr24feed:latest
+  flighttracker/fr24feed:latest
 ```
 
 
@@ -114,5 +114,5 @@ docker run \
   -e INFLUX_ORG= \
   -e INFLUX_BUCKET=adsb \
   -e SEND_INTERVAL=60 \
-  dennis14e/ft-adsb2influx:latest
+  flighttracker/adsb2influx:latest
 ```

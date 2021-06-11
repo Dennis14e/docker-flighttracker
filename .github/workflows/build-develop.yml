@@ -1,0 +1,69 @@
+name: Build develop images
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      DOCKER_PUSH: false
+      DOCKER_HUB_USERNAME: flighttracker
+      PLATFORMS: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/386
+    strategy:
+      fail-fast: false
+      matrix:
+        DOCKERIMAGE:
+          - adsb2influx
+          - dump1090
+          - fr24feed
+    steps:
+      - name: Set DOCKER_PUSH if the origin is this repository
+        if: github.ref == 'refs/heads/develop'
+        run: echo "DOCKER_PUSH=true" >> $GITHUB_ENV
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up cache
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-${{ matrix.DOCKERIMAGE }}-develop-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-${{ matrix.DOCKERIMAGE }}-develop-
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+        with:
+          platforms: ${{ env.PLATFORMS }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Docker Hub
+        if: env.DOCKER_PUSH == 'true'
+        uses: docker/login-action@v1
+        with:
+          username: ${{ env.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ${{ matrix.DOCKERIMAGE }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
+          file: ${{ matrix.DOCKERIMAGE }}/Dockerfile
+          platforms: ${{ env.PLATFORMS }}
+          pull: true
+          push: ${{ env.DOCKER_PUSH }}
+          tags: ${{ env.DOCKER_HUB_USERNAME }}/${{ matrix.DOCKERIMAGE }}:develop
+
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache

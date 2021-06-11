@@ -1,10 +1,9 @@
-name: Build images
+name: Build stable images
 
 on:
   push:
     branches:
       - main
-  pull_request:
 
 jobs:
   build:
@@ -12,7 +11,7 @@ jobs:
     timeout-minutes: 180
     env:
       DOCKER_PUSH: false
-      DOCKER_HUB_USERNAME: dennis14e
+      DOCKER_HUB_USERNAME: flighttracker
       PLATFORMS: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/386
     strategy:
       fail-fast: false
@@ -33,8 +32,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-${{ matrix.DOCKERIMAGE }}-${{ github.sha }}
-          restore-keys: ${{ runner.os }}-${{ matrix.DOCKERIMAGE }}-
+          key: ${{ runner.os }}-${{ matrix.DOCKERIMAGE }}-stable-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-${{ matrix.DOCKERIMAGE }}-stable-
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -61,7 +60,7 @@ jobs:
           platforms: ${{ env.PLATFORMS }}
           pull: true
           push: ${{ env.DOCKER_PUSH }}
-          tags: ${{ env.DOCKER_HUB_USERNAME }}/ft-${{ matrix.DOCKERIMAGE }}:latest
+          tags: ${{ env.DOCKER_HUB_USERNAME }}/${{ matrix.DOCKERIMAGE }}:latest
 
       - name: Move cache
         run: |
