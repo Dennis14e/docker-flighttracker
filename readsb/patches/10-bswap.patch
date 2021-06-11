@@ -3,20 +3,20 @@ index 5905e10..23f2fa2 100644
 --- a/compat/compat.h
 +++ b/compat/compat.h
 @@ -24,6 +24,19 @@
- 
+
  #endif
- 
+
 +/*
 + * Fix to handle different OS byteswap definitions
 + */
-+#ifndef __bswap16
-+    #define __bswap16 __bswap_16
++#ifndef __bswap_16
++    #define __bswap_16 __bswap16
 +#endif
-+#ifndef __bswap32
-+    #define __bswap32 __bswap_32
++#ifndef __bswap_32
++    #define __bswap_32 __bswap32
 +#endif
-+#ifndef __bswap64
-+    #define __bswap64 __bswap_64
++#ifndef __bswap_64
++    #define __bswap_64 __bswap64
 +#endif
 +
  #ifdef MISSING_NANOSLEEP
