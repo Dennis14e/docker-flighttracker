@@ -12,7 +12,8 @@ jobs:
     timeout-minutes: 180
     env:
       DOCKER_PUSH: false
-      DOCKER_HUB_USERNAME: flighttracker
+      DOCKER_HUB_USERNAME: dennis14e
+      DOCKER_HUB_ORGANISATION: flighttracker
       PLATFORMS: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/386
     strategy:
       fail-fast: false
@@ -61,7 +62,7 @@ jobs:
           platforms: ${{ env.PLATFORMS }}
           pull: true
           push: ${{ env.DOCKER_PUSH }}
-          tags: ${{ env.DOCKER_HUB_USERNAME }}/${{ matrix.DOCKERIMAGE }}:develop
+          tags: ${{ env.DOCKER_HUB_ORGANISATION }}/${{ matrix.DOCKERIMAGE }}:develop
 
       - name: Move cache
         run: |
