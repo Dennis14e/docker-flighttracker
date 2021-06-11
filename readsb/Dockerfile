@@ -8,13 +8,15 @@ RUN apk add --no-cache build-base git librtlsdr-dev ncurses-dev zlib-dev argp-st
 # readsb
 WORKDIR /app
 
-RUN git clone --depth 1 https://github.com/wiedehopf/readsb.git . && \
+RUN git clone https://github.com/wiedehopf/readsb.git . && \
+    git -c advice.detachedHead=false checkout 8c5da6a && \
     mkdir patches
 
 COPY patches/*.patch patches/
 
 RUN git apply patches/*.patch && \
-    make RTLSDR=yes
+    make readsb RTLSDR=yes
+
 
 # Base
 FROM alpine:3.13 AS release
@@ -44,4 +46,4 @@ RUN chmod 777 /app/readsb
 EXPOSE 30002 30003 30004 30005
 
 # CMD
-CMD [ "/app/readsb", "${RECEIVER_OPTIONS} ${DECODER_OPTIONS} ${NET_OPTIONS} ${JSON_OPTIONS}" ]
+CMD [ "sh", "-c", "/app/readsb $RECEIVER_OPTIONS $DECODER_OPTIONS $NET_OPTIONS $JSON_OPTIONS" ]
