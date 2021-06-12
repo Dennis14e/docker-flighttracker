@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 180
     env:
+      GIT_REPO_OWNER: "Dennis14e"
+      DOCKER_PUSH: false
       DOCKER_HUB_USERNAME: dennis14e
       DOCKER_HUB_ORGANISATION: flighttracker
       PLATFORMS: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/386
@@ -22,6 +24,10 @@ jobs:
           - fr24feed
           - readsb
     steps:
+      - name: Set DOCKER_PUSH if repository owner is $GIT_REPO_OWNER
+        if: github.repository_owner == env.GIT_REPO_OWNER
+        run: echo DOCKER_PUSH=true >> $GITHUB_ENV
+
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -29,8 +35,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-${{ matrix.DOCKERIMAGE }}-stable-${{ github.sha }}
-          restore-keys: ${{ runner.os }}-${{ matrix.DOCKERIMAGE }}-stable-
+          key: ${{ runner.os }}-${{ matrix.DOCKERIMAGE }}-main-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-${{ matrix.DOCKERIMAGE }}-main-
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -42,6 +48,7 @@ jobs:
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
+        if: env.DOCKER_PUSH == 'true'
         with:
           username: ${{ env.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -55,7 +62,7 @@ jobs:
           file: ${{ matrix.DOCKERIMAGE }}/Dockerfile
           platforms: ${{ env.PLATFORMS }}
           pull: true
-          push: true
+          push: ${{ env.DOCKER_PUSH }}
           tags: ${{ env.DOCKER_HUB_ORGANISATION }}/${{ matrix.DOCKERIMAGE }}:latest
 
       - name: Move cache
