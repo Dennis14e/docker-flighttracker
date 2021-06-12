@@ -11,7 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 180
     env:
+      GIT_REPO_OWNER: "Dennis14e"
       GIT_BRANCH: ""
+      DOCKER_PUSH: false
       DOCKER_HUB_USERNAME: dennis14e
       DOCKER_HUB_ORGANISATION: flighttracker
       PLATFORMS: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/386
@@ -24,6 +26,10 @@ jobs:
           - fr24feed
           - readsb
     steps:
+      - name: Set DOCKER_PUSH if repository owner is $GIT_REPO_OWNER
+        if: github.repository_owner == env.GIT_REPO_OWNER
+        run: echo DOCKER_PUSH=true >> $GITHUB_ENV
+
       - name: Set GIT_BRANCH
         run: echo GIT_BRANCH="$(echo ${GITHUB_REF#refs/heads/} | tr _/ -)" >> $GITHUB_ENV
 
@@ -47,6 +53,7 @@ jobs:
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
+        if: env.DOCKER_PUSH == 'true'
         with:
           username: ${{ env.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -60,7 +67,7 @@ jobs:
           file: ${{ matrix.DOCKERIMAGE }}/Dockerfile
           platforms: ${{ env.PLATFORMS }}
           pull: true
-          push: true
+          push: ${{ env.DOCKER_PUSH }}
           tags: ${{ env.DOCKER_HUB_ORGANISATION }}/${{ matrix.DOCKERIMAGE }}:${{ env.GIT_BRANCH }}
 
       - name: Move cache
