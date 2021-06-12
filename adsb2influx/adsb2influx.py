@@ -146,9 +146,8 @@ class AdsbProcessor(object):
         return (time.time() - self.aircrafts_age.get(hexident, 0))
 
     def msg(self, data):
-        log.debug(data)
-
         data = data.strip()
+        log.debug(data)
 
         matches = self.re_msg.match(data)
         if not matches:
