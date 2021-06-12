@@ -1,6 +1,5 @@
 # Builder
 FROM python:3.9-alpine3.13 AS builder
-LABEL maintainer="Dennis Neufeld <git@dneufeld.net>"
 
 # Workdir
 WORKDIR /app

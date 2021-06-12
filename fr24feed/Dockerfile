@@ -1,6 +1,5 @@
 # Builder
 FROM alpine:3.13 AS builder
-LABEL maintainer="Dennis Neufeld <git@dneufeld.net>"
 
 # fr24feed
 WORKDIR /app
