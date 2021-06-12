@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  dump1090:
+    # build: dump1090
+    image: flighttracker/dump1090:latest
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+    environment:
+      - GMAP_STYLE=new
+      - GMAP_CENTER_LAT=45.0
+      - GMAP_CENTER_LNG=9.0
+
+  # optional
+  fr24feed:
+    # build: fr24feed
+    image: flighttracker/fr24feed:latest
+    restart: unless-stopped
+    depends_on:
+      - dump1090
+    ports:
+      - "8754:8754"
+    environment:
+      - SHARING_KEY=
+      - DUMP1090_HOST=dump1090:30002
+
+#  # optional
+#  adsb2influx:
+#    # build: adsb2influx
+#    image: flighttracker/adsb2influx:latest
+#    restart: unless-stopped
+#    depends_on:
+#      - dump1090
+#    environment:
+#      - DUMP1090_HOST=dump1090
+#      - DUMP1090_PORT=30003
+#      - INFLUX_URL=
+#      - INFLUX_TOKEN=
+#      - INFLUX_ORG=
+#      - INFLUX_BUCKET=adsb
+#      - SEND_INTERVAL=60
