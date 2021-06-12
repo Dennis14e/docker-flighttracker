@@ -2,7 +2,9 @@
 
 [![Build stable images](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build-stable.yml/badge.svg)](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build-stable.yml)
 [![Build develop images](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build-develop.yml/badge.svg)](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build-develop.yml)
+
 [![dump1090 pulls](https://img.shields.io/docker/pulls/flighttracker/dump1090?label=dump1090%20pulls)](https://hub.docker.com/r/flighttracker/dump1090)
+[![readsb pulls](https://img.shields.io/docker/pulls/flighttracker/readsb?label=readsb%20pulls)](https://hub.docker.com/r/flighttracker/readsb)
 [![fr24feed pulls](https://img.shields.io/docker/pulls/flighttracker/fr24feed?label=fr24feed%20pulls)](https://hub.docker.com/r/flighttracker/fr24feed)
 [![adsb2influx pulls](https://img.shields.io/docker/pulls/flighttracker/adsb2influx?label=adsb2influx%20pulls)](https://hub.docker.com/r/flighttracker/adsb2influx)
 
@@ -23,13 +25,13 @@
 
 **Used software:**
 - [dump1090](https://github.com/antirez/dump1090)
-- [fr24feed](https://www.flightradar24.com/share-your-data)
 - [readsb](https://github.com/wiedehopf/readsb)
+- [fr24feed](https://www.flightradar24.com/share-your-data)
+- [adsb2influx](https://github.com/slintak/adsb2influx) (own fork, only for InfluxDB 2.0)
 - [Alpine Linux](https://www.alpinelinux.org/)
 - [OpenStreetMap](https://www.openstreetmap.org/)
 - [Font Awesome](https://fontawesome.com/)
 - [Leaflet](https://github.com/Leaflet/Leaflet)
-- [adsb2influx](https://github.com/slintak/adsb2influx) (own fork, only for InfluxDB 2.0)
 
 
 ## Environment variables
@@ -40,6 +42,10 @@
 | dump1090    | GMAP_STYLE           | old            | Map style old/new         |
 | dump1090    | GMAP_CENTER_LAT      | 45.0           | Map center latitude       |
 | dump1090    | GMAP_CENTER_LNG      | 9.0            | Map center longitude      |
+| readsb      | RECEIVER_OPTIONS     | see [Dockerfile](https://github.com/Dennis14e/docker-flighttracker/blob/main/readsb/Dockerfile) | Receiver options          |
+| readsb      | DECODER_OPTIONS      | see [Dockerfile](https://github.com/Dennis14e/docker-flighttracker/blob/main/readsb/Dockerfile) | Decoder options           |
+| readsb      | NET_OPTIONS          | see [Dockerfile](https://github.com/Dennis14e/docker-flighttracker/blob/main/readsb/Dockerfile) | Network options           |
+| readsb      | JSON_OPTIONS         | see [Dockerfile](https://github.com/Dennis14e/docker-flighttracker/blob/main/readsb/Dockerfile) | JSON options              |
 | fr24feed    | SHARING_KEY          |                | Flightradar24 sharing key |
 | fr24feed    | DUMP1090_HOST        | dump1090:30002 | dump1090 Host:Port        |
 | fr24feed    | RECEIVER             | avr-tcp        | Receiver type             |
@@ -64,8 +70,8 @@
 
 ### Usage
 
-1. Download `docker-compose.example.yml`
-2. Rename `docker-compose.example.yml` to `docker-compose.yml`
+1. Download `docker-compose.dump1090.yml` or `docker-compose.readsb.yml`
+2. Rename the downloaded file to `docker-compose.yml`
 3. Edit `docker-compose.yml` and set services, ports and environment variables
 4. ???
 5. Profit!
@@ -91,6 +97,16 @@ docker run \
   -e GMAP_CENTER_LAT=45.0 \
   -e GMAP_CENTER_LNG=9.0 \
   flighttracker/dump1090:latest
+```
+
+
+## Run readsb
+
+```
+docker run \
+  -it --rm \
+  --device=/dev/bus/usb:/dev/bus/usb \
+  flighttracker/readsb:latest
 ```
 
 
