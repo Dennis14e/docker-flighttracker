@@ -25,7 +25,7 @@ jobs:
           - readsb
     steps:
       - name: Set GIT_BRANCH
-        run: echo GIT_BRANCH="$(${GITHUB_REF#refs/heads/} | tr _/ -)" >> $GITHUB_ENV
+        run: echo GIT_BRANCH="$(echo ${GITHUB_REF#refs/heads/} | tr _/ -)" >> $GITHUB_ENV
 
       - name: Checkout code
         uses: actions/checkout@v2
