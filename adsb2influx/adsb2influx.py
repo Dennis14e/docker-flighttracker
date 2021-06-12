@@ -148,6 +148,8 @@ class AdsbProcessor(object):
     def msg(self, data):
         log.debug(data)
 
+        data = data.strip()
+
         matches = self.re_msg.match(data)
         if not matches:
             log.error('Wrong format for MSG \'{}\', skipping...'.format(data))
