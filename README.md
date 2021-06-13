@@ -9,6 +9,12 @@
 [![adsb2influx pulls](https://img.shields.io/docker/pulls/flighttracker/adsb2influx?label=adsb2influx%20pulls)](https://hub.docker.com/r/flighttracker/adsb2influx)
 [![web-light pulls](https://img.shields.io/docker/pulls/flighttracker/web-light?label=web-light%20pulls)](https://hub.docker.com/r/flighttracker/web-light)
 
+![dump1090 image size](https://img.shields.io/docker/image-size/flighttracker/dump1090/latest?label=dump1090%20image%20size)
+![readsb image size](https://img.shields.io/docker/image-size/flighttracker/readsb/latest?label=readsb%20image%20size)
+![fr24feed image size](https://img.shields.io/docker/image-size/flighttracker/fr24feed/latest?label=fr24feed%20image%20size)
+![adsb2influx image size](https://img.shields.io/docker/image-size/flighttracker/adsb2influx/latest?label=adsb2influx%20image%20size)
+![web-light image size](https://img.shields.io/docker/image-size/flighttracker/web-light/latest?label=web-light%20image%20size)
+
 
 ## Supported architectures
 - linux/amd64
