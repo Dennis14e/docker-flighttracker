@@ -40,6 +40,26 @@
 - [Leaflet](https://github.com/Leaflet/Leaflet)
 
 
+## Run with docker-compose
+
+### Usage
+
+1. Download `docker-compose.dump1090.yml` or `docker-compose.readsb.yml`
+2. Rename the downloaded file to `docker-compose.yml`
+3. Edit `docker-compose.yml` and set services, ports and environment variables
+4. ???
+5. Profit!
+
+### Commands
+
+| Description      | Command                  |
+|------------------|--------------------------|
+| Start containers | `docker-compose up -d`   |
+| Stop containers  | `docker-compose down`    |
+| Pull images      | `docker-compose pull`    |
+| See logs         | `docker-compose logs -f` |
+
+
 ## Image "dump1090"
 
 ### Environment variables
@@ -175,23 +195,3 @@ docker run \
   -e SEND_INTERVAL=60 \
   flighttracker/adsb2influx:latest
 ```
-
-
-## Run with docker-compose
-
-### Usage
-
-1. Download `docker-compose.dump1090.yml` or `docker-compose.readsb.yml`
-2. Rename the downloaded file to `docker-compose.yml`
-3. Edit `docker-compose.yml` and set services, ports and environment variables
-4. ???
-5. Profit!
-
-### Commands
-
-| Description      | Command                  |
-|------------------|--------------------------|
-| Start containers | `docker-compose up -d`   |
-| Stop containers  | `docker-compose down`    |
-| Pull images      | `docker-compose pull`    |
-| See logs         | `docker-compose logs -f` |
