@@ -16,7 +16,7 @@ services:
     depends_on:
       - readsb
     ports:
-      "80:80"
+      - "80:80"
     environment:
       - CENTER_LAT=
       - CENTER_LNG=
