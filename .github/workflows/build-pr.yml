@@ -18,6 +18,7 @@ jobs:
           - dump1090
           - fr24feed
           - readsb
+          - web-light
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
