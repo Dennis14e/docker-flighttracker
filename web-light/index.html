@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <title>{{PAGE_TITLE}}</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" integrity="sha256-BPfK9M5v34c2XP6p0cxVz1mUQLst0gTLk0mlc7kuodA=" crossorigin="anonymous">
+  <style>
+  html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  #map_canvas {
+    width: 100%;
+    height: 100%;
+  }
+  /* Icons by Font Awesome */
+  .tower-icon {
+    cursor: auto;
+    width: 20px;
+    height: 20px;
+    background: url('data:image/svg+xml,<svg focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" width="20px" height="20px"><path fill="currentColor" d="M150.94 192h33.73c11.01 0 18.61-10.83 14.86-21.18-4.93-13.58-7.55-27.98-7.55-42.82s2.62-29.24 7.55-42.82C203.29 74.83 195.68 64 184.67 64h-33.73c-7.01 0-13.46 4.49-15.41 11.23C130.64 92.21 128 109.88 128 128c0 18.12 2.64 35.79 7.54 52.76 1.94 6.74 8.39 11.24 15.4 11.24zM89.92 23.34C95.56 12.72 87.97 0 75.96 0H40.63c-6.27 0-12.14 3.59-14.74 9.31C9.4 45.54 0 85.65 0 128c0 24.75 3.12 68.33 26.69 118.86 2.62 5.63 8.42 9.14 14.61 9.14h34.84c12.02 0 19.61-12.74 13.95-23.37-49.78-93.32-16.71-178.15-.17-209.29zM614.06 9.29C611.46 3.58 605.6 0 599.33 0h-35.42c-11.98 0-19.66 12.66-14.02 23.25 18.27 34.29 48.42 119.42.28 209.23-5.72 10.68 1.8 23.52 13.91 23.52h35.23c6.27 0 12.13-3.58 14.73-9.29C630.57 210.48 640 170.36 640 128s-9.42-82.48-25.94-118.71zM489.06 64h-33.73c-11.01 0-18.61 10.83-14.86 21.18 4.93 13.58 7.55 27.98 7.55 42.82s-2.62 29.24-7.55 42.82c-3.76 10.35 3.85 21.18 14.86 21.18h33.73c7.02 0 13.46-4.49 15.41-11.24 4.9-16.97 7.53-34.64 7.53-52.76 0-18.12-2.64-35.79-7.54-52.76-1.94-6.75-8.39-11.24-15.4-11.24zm-116.3 100.12c7.05-10.29 11.2-22.71 11.2-36.12 0-35.35-28.63-64-63.96-64-35.32 0-63.96 28.65-63.96 64 0 13.41 4.15 25.83 11.2 36.12l-130.5 313.41c-3.4 8.15.46 17.52 8.61 20.92l29.51 12.31c8.15 3.4 17.52-.46 20.91-8.61L244.96 384h150.07l49.2 118.15c3.4 8.16 12.76 12.01 20.91 8.61l29.51-12.31c8.15-3.4 12-12.77 8.61-20.92l-130.5-313.41zM271.62 320L320 203.81 368.38 320h-96.76z"></path></svg>') no-repeat;
+  }
+  .plane-icon {
+    width: 20px;
+    height: 20px;
+    background: url('data:image/svg+xml,<svg focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="20px" height="20px" transform="rotate(270)"><path fill="currentColor" d="M480 192H365.71L260.61 8.06A16.014 16.014 0 0 0 246.71 0h-65.5c-10.63 0-18.3 10.17-15.38 20.39L214.86 192H112l-43.2-57.6c-3.02-4.03-7.77-6.4-12.8-6.4H16.01C5.6 128-2.04 137.78.49 147.88L32 256 .49 364.12C-2.04 374.22 5.6 384 16.01 384H56c5.04 0 9.78-2.37 12.8-6.4L112 320h102.86l-49.03 171.6c-2.92 10.22 4.75 20.4 15.38 20.4h65.5c5.74 0 11.04-3.08 13.89-8.06L365.71 320H480c35.35 0 96-28.65 96-64s-60.65-64-96-64z"></path></svg>') no-repeat;
+  }
+  .plane-info {
+    width: 100%;
+  }
+  .plane-info td:first-child {
+    width: 50%;
+  }
+  </style>
+</head>
+<body>
+  <div id="map_canvas"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js" integrity="sha256-yDc0eil8GjWFKqN1OSzHSVCiuGghTosZCcRje4tj7iQ=" crossorigin="anonymous"></script>
+  <script>
+  CenterLat = {{CENTER_LAT}};
+  CenterLng = {{CENTER_LNG}};
+
+  Map = null;
+  Planes = [];
+
+  class Plane {
+    constructor(hex, flight, squawk, latitude, longitude, altitude, speed, track) {
+      this.hex       = hex.trim();
+      this.flight    = flight.trim();
+      this.squawk    = String(parseInt(squawk)).padStart(4, 0);
+      this.latitude  = parseFloat(latitude);
+      this.longitude = parseFloat(longitude);
+      this.altitude  = parseInt(altitude).toLocaleString('en');
+      this.speed     = parseFloat(speed);
+      this.track     = Math.min(Math.max(parseFloat(track), 0), 360);
+      this.marker    = null;
+    }
+  }
+
+  // process data
+  const processData = (data) => {
+    // Convert to Plane object
+    data.forEach((plane, index) => {
+      console.log(plane);
+
+      plane = new Plane(
+        plane.hex,
+        plane.flight ?? '',
+        plane.squawk ?? 0,
+        plane.lat ?? plane.lastPosition.lat,
+        plane.lon ?? plane.lastPosition.lon,
+        plane.alt_baro,
+        plane.tas ?? plane.gs ?? 0,
+        plane.true_heading ?? plane.track
+      );
+
+      data[index] = plane;
+    });
+
+
+    // Delete not existing planes
+    Planes.forEach((plane, index) => {
+      const pIndex = data.findIndex((pElement) => pElement.hex === plane.hex);
+
+      // Remove not existing plane
+      if (pIndex === -1) {
+        // Remove marker
+        if (plane.marker !== null) {
+          Map.removeLayer(plane.marker);
+        }
+
+        Planes.splice(index, 1);
+      }
+    });
+
+    // Add/update planes to array
+    data.forEach((plane, index) => {
+      const pIndex = Planes.findIndex((pElement) => pElement.hex === plane.hex);
+
+      if (pIndex === -1) {
+        // Add new plane
+        Planes.push(plane);
+      }
+      else {
+        // Persistent property
+        plane.marker = Planes[pIndex].marker;
+
+        Planes[pIndex] = plane;
+      }
+    });
+
+    // Add/update marker
+    Planes.forEach((plane, index) => {
+      const marker_data = {
+        LatLng: {
+          lat: plane.latitude,
+          lng: plane.longitude,
+        },
+        description:
+          '<table class="plane-info">' +
+          (
+            plane.flight.length > 0
+              ? '<thead>' +
+                '<tr><th>Flight:</th><th>' + plane.flight + '</th></tr>' +
+                '</thead>'
+              : ''
+          ) +
+          '<tbody>' +
+          '<tr><td>ICAO:</td><td>' + plane.hex + '</td></tr>' +
+          '<tr><td>Squawk:</td><td>' + plane.squawk + '</td></tr>' +
+          '<tr><td>Latitude:</td><td>' + plane.latitude + '</td></tr>' +
+          '<tr><td>Longitude:</td><td>' + plane.longitude + '</td></tr>' +
+          '<tr><td>Altitude:</td><td>' + plane.altitude + ' ft</td></tr>' +
+          '<tr><td>Speed:</td><td>' + plane.speed + ' kn</td></tr>' +
+          '<tr><td>Track:</td><td>' + plane.track + ' &deg;</td></tr>' +
+          '</tbody>' +
+          '</table>' +
+          (
+            plane.flight.length > 0
+              ? '<br>' +
+                '<a target="_blank" rel="noopener noreferrer" href="https://flightaware.com/live/flight/' + plane.flight + '">FlightAware</a> &#124; ' +
+                '<a target="_blank" rel="noopener noreferrer" href="https://www.flightradar24.com/' + plane.flight + '">Flightradar24</a> &#124; ' +
+                '<a target="_blank" rel="noopener noreferrer" href="https://planefinder.net/data/flight/' + plane.flight + '">Planefinder</a>'
+              : ''
+          )
+      };
+
+      if (plane.marker === null) {
+        // create marker
+        plane.marker = L.marker(
+          marker_data.LatLng,
+          {
+            icon: L.divIcon({
+              className: null,
+              iconSize: [ 20, 20 ],
+              html: '<div class="plane-icon"></div>',
+            }),
+            zIndexOffset: 10,
+          }
+        ).addTo(Map);
+
+        // create popup for marker
+        plane.marker.bindPopup(marker_data.description);
+
+        // TODO follow marker
+
+      }
+      else {
+        // only update location if changed
+        if (plane.marker.getLatLng() !== marker_data.LatLng) {
+          plane.marker.setLatLng(marker_data.LatLng);
+        }
+
+        // only update popup if changed
+        if (plane.marker.getPopup().getContent() !== marker_data.description) {
+          plane.marker.setPopupContent(marker_data.description);
+        }
+
+        plane.marker.update();
+      }
+
+      // update icon rotation
+      plane.marker._icon.querySelector('.plane-icon').style.transform = 'rotate(' + plane.track + 'deg)';
+
+      // save plane
+      Planes[index] = plane;
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // create map
+    Map = L.map('map_canvas', {
+      center: [ CenterLat, CenterLng ],
+      zoom: 6,
+    });
+
+    // use OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution:
+        'Map data &copy; <a target="_blank" rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+        'Icons &copy; <a target="_blank" rel="noopener noreferrer" href="https://fontawesome.com/license/free">Font Awesome</a>',
+    }).addTo(Map);
+
+    // create tower marker
+    L.marker(
+      [ CenterLat, CenterLng ],
+      {
+        icon: L.divIcon({
+          className: null,
+          iconSize: [ 20, 20 ],
+          html: '<div class="tower-icon"></div>',
+        }),
+        keyboard: false,
+      }
+    ).addTo(Map);
+
+    // Setup pull timer
+    window.setInterval(() => {
+      fetch('./aircraft.json')
+        .then(res => res.json())
+        .then(data => {
+          processData(data.aircraft);
+        })
+        .catch(err => { throw err });
+    }, {{REFRESH_RATE}});
+  });
+  </script>
+</body>
+</html>

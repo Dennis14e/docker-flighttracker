@@ -25,6 +25,7 @@ jobs:
           - dump1090
           - fr24feed
           - readsb
+          - web-light
     steps:
       - name: Set DOCKER_PUSH if repository owner is $GIT_REPO_OWNER
         if: github.repository_owner == env.GIT_REPO_OWNER

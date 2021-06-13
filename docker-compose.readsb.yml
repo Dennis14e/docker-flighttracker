@@ -9,6 +9,20 @@ services:
       - /dev/bus/usb:/dev/bus/usb
 
   # optional
+  web-light:
+    # build: web-light
+    image: flighttracker/web-light:latest
+    restart: unless-stopped
+    depends_on:
+      - readsb
+    ports:
+      "80:80"
+    environment:
+      - CENTER_LAT=
+      - CENTER_LNG=
+      - CENTER_RADIUS=
+
+  # optional
   fr24feed:
     # build: fr24feed
     image: flighttracker/fr24feed:latest
