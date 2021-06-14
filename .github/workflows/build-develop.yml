@@ -34,6 +34,10 @@ jobs:
       - name: Set GIT_BRANCH
         run: echo GIT_BRANCH="$(echo ${GITHUB_REF#refs/heads/} | tr _/ -)" >> $GITHUB_ENV
 
+      - name: Set GIT_BRANCH to develop if main
+        if: env.GIT_BRANCH == 'main'
+        run: echo GIT_BRANCH=develop >> $GITHUB_ENV
+
       - name: Checkout code
         uses: actions/checkout@v2
 
