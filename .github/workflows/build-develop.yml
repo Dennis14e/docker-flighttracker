@@ -3,15 +3,15 @@ name: Build develop images
 on:
   push:
     branches:
-      - develop
+      - main
       - 'features/**'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 60
     env:
-      GIT_REPO_OWNER: "Dennis14e"
+      GIT_REPO_OWNER: Dennis14e
       GIT_BRANCH: ""
       DOCKER_PUSH: false
       DOCKER_HUB_USERNAME: dennis14e

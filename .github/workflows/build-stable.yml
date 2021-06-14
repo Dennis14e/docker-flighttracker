@@ -3,12 +3,12 @@ name: Build stable images
 on:
   push:
     branches:
-      - main
+      - stable
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 60
     env:
       GIT_REPO_OWNER: "Dennis14e"
       DOCKER_PUSH: false
@@ -36,8 +36,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-${{ matrix.DOCKERIMAGE }}-main-${{ github.sha }}
-          restore-keys: ${{ runner.os }}-${{ matrix.DOCKERIMAGE }}-main-
+          key: ${{ runner.os }}-${{ matrix.DOCKERIMAGE }}-stable-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-${{ matrix.DOCKERIMAGE }}-stable-
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
