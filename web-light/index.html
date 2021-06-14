@@ -5,7 +5,7 @@
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <title>{{PAGE_TITLE}}</title>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" integrity="sha256-BPfK9M5v34c2XP6p0cxVz1mUQLst0gTLk0mlc7kuodA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/leaflet/leaflet.css">
   <style>
   html, body {
     width: 100%;
@@ -41,7 +41,7 @@
 <body>
   <div id="map_canvas"></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js" integrity="sha256-yDc0eil8GjWFKqN1OSzHSVCiuGghTosZCcRje4tj7iQ=" crossorigin="anonymous"></script>
+  <script src="assets/leaflet/leaflet.js"></script>
   <script>
   CenterLat = {{CENTER_LAT}};
   CenterLng = {{CENTER_LNG}};
@@ -67,8 +67,6 @@
   const processData = (data) => {
     // Convert to Plane object
     data.forEach((plane, index) => {
-      console.log(plane);
-
       plane = new Plane(
         plane.hex,
         plane.flight ?? '',
@@ -169,7 +167,6 @@
         plane.marker.bindPopup(marker_data.description);
 
         // TODO follow marker
-
       }
       else {
         // only update location if changed

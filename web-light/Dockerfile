@@ -1,3 +1,28 @@
+# Builder
+FROM alpine:3.13 AS builder
+
+WORKDIR /app
+
+# Packages
+RUN apk add --no-cache \
+    findutils
+
+# Leaflet
+ARG LEAFLET_URL="https://github.com/Leaflet/Leaflet/archive/refs/tags/v1.7.1.tar.gz"
+RUN mkdir -p leaflet assets/leaflet && \
+    wget -O - "$LEAFLET_URL" | tar -xvzf - --strip 1 -C /app/leaflet
+
+RUN cp -r \
+    leaflet/dist/leaflet.css \
+    leaflet/dist/leaflet.js \
+    leaflet/dist/leaflet.js.map \
+    leaflet/dist/images/ \
+    assets/leaflet/
+
+RUN find /app -type d -exec chmod 755 {} \; && \
+    find /app -type f -exec chmod 644 {} \;
+
+
 # Base
 FROM nginx:1.21-alpine AS release
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
@@ -12,6 +37,7 @@ WORKDIR /app
 COPY entrypoint.sh /docker-entrypoint.d/50-entrypoint.sh
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY index.html /app/index.html
+COPY --from=builder /app/assets/ /app/assets/
 
 RUN chmod 777 /docker-entrypoint.d/50-entrypoint.sh
 RUN chmod 644 /app/index.html
