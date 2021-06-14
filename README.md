@@ -3,18 +3,6 @@
 [![Build stable images](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build-stable.yml/badge.svg)](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build-stable.yml)
 [![Build develop images](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build-develop.yml/badge.svg)](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build-develop.yml)
 
-[![dump1090 pulls](https://img.shields.io/docker/pulls/flighttracker/dump1090?label=dump1090%20pulls)](https://hub.docker.com/r/flighttracker/dump1090)
-[![readsb pulls](https://img.shields.io/docker/pulls/flighttracker/readsb?label=readsb%20pulls)](https://hub.docker.com/r/flighttracker/readsb)
-[![fr24feed pulls](https://img.shields.io/docker/pulls/flighttracker/fr24feed?label=fr24feed%20pulls)](https://hub.docker.com/r/flighttracker/fr24feed)
-[![adsb2influx pulls](https://img.shields.io/docker/pulls/flighttracker/adsb2influx?label=adsb2influx%20pulls)](https://hub.docker.com/r/flighttracker/adsb2influx)
-[![web-light pulls](https://img.shields.io/docker/pulls/flighttracker/web-light?label=web-light%20pulls)](https://hub.docker.com/r/flighttracker/web-light)
-
-![dump1090 image size](https://img.shields.io/docker/image-size/flighttracker/dump1090/latest?label=dump1090%20image%20size)
-![readsb image size](https://img.shields.io/docker/image-size/flighttracker/readsb/latest?label=readsb%20image%20size)
-![fr24feed image size](https://img.shields.io/docker/image-size/flighttracker/fr24feed/latest?label=fr24feed%20image%20size)
-![adsb2influx image size](https://img.shields.io/docker/image-size/flighttracker/adsb2influx/latest?label=adsb2influx%20image%20size)
-![web-light image size](https://img.shields.io/docker/image-size/flighttracker/web-light/latest?label=web-light%20image%20size)
-
 
 ## Supported architectures
 - linux/amd64
@@ -67,6 +55,7 @@
 
 
 ## Image "dump1090"
+[![Docker Pulls](https://img.shields.io/docker/pulls/flighttracker/dump1090) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/flighttracker/dump1090/latest)](https://hub.docker.com/r/flighttracker/dump1090)
 
 ### Environment variables
 
@@ -92,6 +81,7 @@ docker run \
 
 
 ## Image "readsb"
+[![Docker Pulls](https://img.shields.io/docker/pulls/flighttracker/readsb) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/flighttracker/readsb/latest)](https://hub.docker.com/r/flighttracker/readsb)
 
 ### Environment variables
 
@@ -113,6 +103,7 @@ docker run \
 
 
 ## Image "fr24feed"
+[![Docker Pulls](https://img.shields.io/docker/pulls/flighttracker/fr24feed) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/flighttracker/fr24feed/latest)](https://hub.docker.com/r/flighttracker/fr24feed)
 
 fr24feed is compatible with dump1090 and readsb.
 
@@ -144,6 +135,7 @@ docker run \
 
 
 ## Image "web-light"
+[![Docker Pulls](https://img.shields.io/docker/pulls/flighttracker/web-light) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/flighttracker/web-light/latest)](https://hub.docker.com/r/flighttracker/web-light)
 
 web-light is only compatible with readsb.
 
@@ -173,6 +165,7 @@ docker run \
 
 
 ## Image "adsb2influx"
+[![Docker Pulls](https://img.shields.io/docker/pulls/flighttracker/adsb2influx) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/flighttracker/adsb2influx/latest)](https://hub.docker.com/r/flighttracker/adsb2influx)
 
 adsb2influx is compatible with dump1090 and readsb.
 
