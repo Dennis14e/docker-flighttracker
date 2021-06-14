@@ -87,6 +87,7 @@ docker run \
 
 | Environment variable | Default                                                                                         | Description      |
 |----------------------|-------------------------------------------------------------------------------------------------|------------------|
+| PROGRAM_OPTIONS      | see [Dockerfile](https://github.com/Dennis14e/docker-flighttracker/blob/main/readsb/Dockerfile) | Program options  |
 | RECEIVER_OPTIONS     | see [Dockerfile](https://github.com/Dennis14e/docker-flighttracker/blob/main/readsb/Dockerfile) | Receiver options |
 | DECODER_OPTIONS      | see [Dockerfile](https://github.com/Dennis14e/docker-flighttracker/blob/main/readsb/Dockerfile) | Decoder options  |
 | NET_OPTIONS          | see [Dockerfile](https://github.com/Dennis14e/docker-flighttracker/blob/main/readsb/Dockerfile) | Network options  |
