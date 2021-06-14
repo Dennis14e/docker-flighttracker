@@ -165,8 +165,9 @@ web-light is only compatible with readsb.
 docker run \
   -it --rm \
   -p 80:80 \
-  -e SHARING_KEY=REPLACE \
-  -e DUMP1090_HOST=dump1090:30002 \
+  -e CENTER_LAT=REPLACE \
+  -e CENTER_LNG=REPLACE \
+  -e CENTER_RANGE=REPLACE \
   flighttracker/web-light:latest
 ```
 
