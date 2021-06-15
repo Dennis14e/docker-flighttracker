@@ -28,6 +28,7 @@
 - [readsb](https://github.com/wiedehopf/readsb)
 - [fr24feed](https://www.flightradar24.com/share-your-data)
 - [adsb2influx](https://github.com/slintak/adsb2influx) (own fork, only for InfluxDB 2.0)
+- [mlat-client](https://github.com/wiedehopf/mlat-client)
 - [Alpine Linux](https://www.alpinelinux.org/)
 - [OpenStreetMap](https://www.openstreetmap.org/)
 - [Font Awesome](https://fontawesome.com/)
@@ -163,6 +164,43 @@ docker run \
   -e CENTER_LNG=REPLACE \
   -e CENTER_RANGE=REPLACE \
   flighttracker/web-light:latest
+```
+
+
+## Image "mlat-client"
+[![Docker Pulls](https://img.shields.io/docker/pulls/flighttracker/mlat-client) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/flighttracker/mlat-client/latest)](https://hub.docker.com/r/flighttracker/mlat-client)
+
+### Environment variables
+
+| Environment variable | Default               | Description                                                                                                           |
+|----------------------|-----------------------|-----------------------------------------------------------------------------------------------------------------------|
+| INPUT_TYPE           | auto                  | Input type: `auto`, `dump1090`, `beast`, `radarcape_12mhz`, `radarcape_gps`, `radarcape`, `sbs`, `avrmlat`            |
+| INPUT_CONNECT_HOST   |                       | Input host to connect to for Mode S traffic                                                                           |
+| INPUT_CONNECT_PORT   | 30002                 | Input port to connect to for Mode S traffic                                                                           |
+| RESULTS              |                       | `<protocol>,connect,<host:port>` or `<protocol>,listen,<port>`<br>Protocol: `basestation`, `ext_basestation`, `beast` |
+| NO_ANON_RESULTS      | no                    | No results for anonymized aircraft: `yes`, `no`                                                                       |
+| NO_MODEAC_RESULTS    | no                    | No results for Mode A/C tracks: `yes`, `no`                                                                           |
+| LAT                  |                       | Latitude of receiver                                                                                                  |
+| LON                  |                       | Longitude of receiver                                                                                                 |
+| ALT                  |                       | Altitude of receiver (in `m` or `ft`)                                                                                 |
+| PRIVACY              | no                    | Sets the privacy flag for this receiver: `yes`, `no`                                                                  |
+| USER                 |                       | User information to give to the server                                                                                |
+| SERVER_HOST          | feed.adsbexchange.com | Host of the multilateration server to connect to                                                                      |
+| SERVER_PORT          | 31090                 | Port of the multilateration server to connect to                                                                      |
+| NO_UDP               | no                    | Don't offer to use UDP transport for sync/mlat messages: `yes`, `no`                                                  |
+| LOG_TIMESTAMPS       | no                    | Print timestamps in logging output: `yes`, `no`                                                                       |
+
+### docker run
+```
+docker run \
+  -it --rm \
+  -e INPUT_CONNECT_HOST=readsb \
+  -e INPUT_CONNECT_PORT=30002 \
+  -e LAT= \
+  -e LON= \
+  -e ALT= \
+  -e USER= \
+  flighttracker/mlat-client:latest
 ```
 
 

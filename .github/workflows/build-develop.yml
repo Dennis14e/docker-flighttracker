@@ -24,6 +24,7 @@ jobs:
           - adsb2influx
           - dump1090
           - fr24feed
+          - mlat-client
           - readsb
           - web-light
     steps:
