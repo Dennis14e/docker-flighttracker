@@ -38,7 +38,7 @@ RUN chmod 777 /entrypoint.sh /app/readsb && \
     mkdir /boot
 
 # ENV
-ENV ADSB_UUID=""
+ENV ADSBX_UUID=""
 ENV PROGRAM_OPTIONS="--no-interactive --quiet"
 ENV RECEIVER_OPTIONS="--device 0 --device-type rtlsdr --gain -10 --ppm 0"
 ENV DECODER_OPTIONS="--max-range 360 --write-json-every 1 --modeac-auto"

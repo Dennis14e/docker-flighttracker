@@ -1,12 +1,12 @@
 #!/usr/bin/env sh
 
 # Environment
-ADSB_UUID="${ADSB_UUID:-}"
+ADSBX_UUID="${ADSBX_UUID:-}"
 
 # Set file
-if [ ! -z "$ADSB_UUID" ]
+if [ ! -z "$ADSBX_UUID" ]
 then
-    echo "$ADSB_UUID" > /boot/adsbx-uuid
+    echo "$ADSBX_UUID" > /boot/adsbx-uuid
 fi
 
 # Exec CMD
