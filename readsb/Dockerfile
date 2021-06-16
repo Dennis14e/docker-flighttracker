@@ -34,8 +34,8 @@ WORKDIR /app
 COPY entrypoint.sh /entrypoint.sh
 COPY --from=builder /app/readsb /app/readsb
 
-RUN chmod 777 /entrypoint.sh /app/readsb && \
-    mkdir /boot
+RUN chmod +x /entrypoint.sh /app/readsb && \
+    mkdir /data
 
 # ENV
 ENV ADSBX_UUID=""
