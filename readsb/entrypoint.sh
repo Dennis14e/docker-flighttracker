@@ -20,7 +20,7 @@ DEVICE="${DEVICE:-}"
 ENABLE_AGC="${ENABLE_AGC:-no}"
 PPM="${PPM:-}"
 GAIN="${GAIN:-}"
-FREQ="${FREQ:-1090}"
+FREQ="${FREQ:-1090000000}"
 PREAMBLE_THRESHOLD="${PREAMBLE_THRESHOLD:-}"
 
 FIX="${FIX:-yes}"
@@ -86,19 +86,21 @@ NET_API_PORT="${NET_API_PORT:-}"
 NET_JSON_PORT="${NET_JSON_PORT:-}"
 NET_RO_SIZE="${NET_RO_SIZE:-}"
 NET_RO_INTERVAL="${NET_RO_INTERVAL:-}"
-NET_BO_PORT="${NET_BO_PORT:-}"
-NET_BI_PORT="${NET_BI_PORT:-}"
 NET_RO_PORT="${NET_RO_PORT:-}"
 NET_RI_PORT="${NET_RI_PORT:-}"
+NET_BO_PORT="${NET_BO_PORT:-}"
+NET_BI_PORT="${NET_BI_PORT:-}"
 NET_SBS_REDUCE="${NET_SBS_REDUCE:-}"
 NET_SBS_PORT="${NET_SBS_PORT:-}"
 NET_SBS_IN_PORT="${NET_SBS_IN_PORT:-}"
 NET_SBS_JAERO_PORT="${NET_SBS_JAERO_PORT:-}"
 NET_SBS_JAERO_IN_PORT="${NET_SBS_JAERO_IN_PORT:-}"
+NET_VRS_INTERVAL="${NET_VRS_INTERVAL:-}"
 NET_VRS_PORT="${NET_VRS_PORT:-}"
-NET_VRS_INTERNAL="${NET_VRS_INTERNAL:-}"
-NET_BEAST_REDUCE_OUT_PORT="${NET_BEAST_REDUCE_OUT_PORT:-}"
 NET_BEAST_REDUCE_INTERVAL="${NET_BEAST_REDUCE_INTERVAL:-}"
+NET_BEAST_REDUCE_FILTER_DIST="${NET_BEAST_REDUCE_FILTER_DIST:-}"
+NET_BEAST_REDUCE_FILTER_ALL="${NET_BEAST_REDUCE_FILTER_ALL:-}"
+NET_BEAST_REDUCE_OUT_PORT="${NET_BEAST_REDUCE_OUT_PORT:-}"
 
 BEAST_SERIAL="${BEAST_SERIAL:-}"
 BEAST_DF1117_ON="${BEAST_DF1117_ON:-no}"
@@ -112,9 +114,11 @@ IFILE="${IFILE:-}"
 IFORMAT="${IFORMAT:-}"
 THROTTLE="${THROTTLE:-no}"
 
+CUSTOM="${CUSTOM:-}"
+
 
 # Validate
-if [ -z "$UUID_FILE" ] || [ -z "$MAX_RANGE" ] || [ -z "$FREQ" ] || [ -z "$DEVICE_TYPE" ] || [ -z "$DEVICE" ]
+if [ -z "$DEVICE_TYPE" ] || [ -z "$DEVICE" ]
 then
     >&2 echo "Required environment variables are empty. Exiting..."
     sleep 3
@@ -123,7 +127,7 @@ fi
 
 
 # Command
-ARGS="--uuid-file ${UUID_FILE} --max-range ${MAX_RANGE} --freq ${FREQ} --device ${DEVICE} --device-type ${DEVICE_TYPE}"
+ARGS="--device-type ${DEVICE_TYPE} --device ${DEVICE}"
 
 
 if [ ! -z "$LAT" ]
@@ -134,6 +138,11 @@ fi
 if [ ! -z "$LON" ]
 then
     ARGS="${ARGS} --lon ${LON}"
+fi
+
+if [ ! -z "$MAX_RANGE" ]
+then
+    ARGS="${ARGS} --max-range ${MAX_RANGE}"
 fi
 
 if [ "$METRIC" = "yes" ]
@@ -172,10 +181,14 @@ then
 fi
 
 
-
-if [ ! -z "$UUID" ]
+if [ ! -z "$UUID_FILE" ]
 then
-    echo "$UUID" > "$UUID_FILE"
+    ARGS="${ARGS} --uuid-file ${UUID_FILE}"
+
+    if [ ! -z "$UUID" ]
+    then
+        echo "$UUID" > "$UUID_FILE"
+    fi
 fi
 
 
@@ -192,6 +205,11 @@ fi
 if [ ! -z "$GAIN" ]
 then
     ARGS="${ARGS} --gain ${GAIN}"
+fi
+
+if [ ! -z "$FREQ" ]
+then
+    ARGS="${ARGS} --freq ${FREQ}"
 fi
 
 if [ ! -z "$PREAMBLE_THRESHOLD" ]
@@ -346,7 +364,251 @@ then
 fi
 
 
-# TODO
+if [ ! -z "$JAERO_TIMEOUT" ]
+then
+    ARGS="${ARGS} --jaero-timeout ${JAERO_TIMEOUT}"
+fi
+
+
+if [ ! -z "$DB_FILE" ]
+then
+    ARGS="${ARGS} --db-file ${DB_FILE}"
+fi
+
+if [ ! -z "$DB_FILE_LT" ]
+then
+    ARGS="${ARGS} --db-file-lt ${DB_FILE_LT}"
+fi
+
+
+if [ ! -z "$RECEIVER_FOCUS" ]
+then
+    ARGS="${ARGS} --receiver-focus ${RECEIVER_FOCUS}"
+fi
+
+if [ ! -z "$CPR_FOCUS" ]
+then
+    ARGS="${ARGS} --cpr-focus ${CPR_FOCUS}"
+fi
+
+if [ ! -z "$LEG_FOCUS" ]
+then
+    ARGS="${ARGS} --leg-focus ${LEG_FOCUS}"
+fi
+
+if [ ! -z "$TRACE_FOCUS" ]
+then
+    ARGS="${ARGS} --trace-focus ${TRACE_FOCUS}"
+fi
+
+
+if [ "$NET" = "yes" ]
+then
+    ARGS="${ARGS} --net"
+fi
+
+if [ ! -z "$NET_BUFFER" ]
+then
+    ARGS="${ARGS} --net-buffer ${NET_BUFFER}"
+fi
+
+if [ ! -z "$NET_VERBATIM" ]
+then
+    ARGS="${ARGS} --net-verbatim ${NET_VERBATIM}"
+fi
+
+if [ ! -z "$NET_HEARTBEAT" ]
+then
+    ARGS="${ARGS} --net-heartbeat ${NET_HEARTBEAT}"
+fi
+
+if [ ! -z "$NET_CONNECTION" ]
+then
+    ARGS="${ARGS} --net-connection ${NET_CONNECTION}"
+fi
+
+if [ ! -z "$NET_CONNECTION_DELAY" ]
+then
+    ARGS="${ARGS} --net-connection-delay ${NET_CONNECTION_DELAY}"
+fi
+
+if [ "$NET_ONLY" = "yes" ]
+then
+    ARGS="${ARGS} --net-only"
+fi
+
+if [ ! -z "$NET_BIND_ADDRESS" ]
+then
+    ARGS="${ARGS} --net-bind-address ${NET_BIND_ADDRESS}"
+fi
+
+if [ ! -z "$NET_RECEIVER_ID" ]
+then
+    ARGS="${ARGS} --net-receiver-id ${NET_RECEIVER_ID}"
+fi
+
+if [ ! -z "$NET_INGEST" ]
+then
+    ARGS="${ARGS} --net-ingest ${NET_INGEST}"
+fi
+
+if [ ! -z "$NET_GARBAGE" ]
+then
+    ARGS="${ARGS} --net-garbage ${NET_GARBAGE}"
+fi
+
+if [ ! -z "$NET_API_PORT" ]
+then
+    ARGS="${ARGS} --net-api-port ${NET_API_PORT}"
+fi
+
+if [ ! -z "$NET_JSON_PORT" ]
+then
+    ARGS="${ARGS} --net-json-port ${NET_JSON_PORT}"
+fi
+
+if [ ! -z "$NET_RO_SIZE" ]
+then
+    ARGS="${ARGS} --net-ro-size ${NET_RO_SIZE}"
+fi
+
+if [ ! -z "$NET_RO_INTERVAL" ]
+then
+    ARGS="${ARGS} --net-ro-interval ${NET_RO_INTERVAL}"
+fi
+
+if [ ! -z "$NET_RO_PORT" ]
+then
+    ARGS="${ARGS} --net-ro-port ${NET_RO_PORT}"
+fi
+
+if [ ! -z "$NET_RI_PORT" ]
+then
+    ARGS="${ARGS} --net-ri-port ${NET_RI_PORT}"
+fi
+
+if [ ! -z "$NET_BO_PORT" ]
+then
+    ARGS="${ARGS} --net-bo-port ${NET_BO_PORT}"
+fi
+
+if [ ! -z "$NET_BI_PORT" ]
+then
+    ARGS="${ARGS} --net-bi-port ${NET_BI_PORT}"
+fi
+
+if [ ! -z "$NET_SBS_REDUCE" ]
+then
+    ARGS="${ARGS} --net-sbs-reduce ${NET_SBS_REDUCE}"
+fi
+
+if [ ! -z "$NET_SBS_PORT" ]
+then
+    ARGS="${ARGS} --net-sbs-port ${NET_SBS_PORT}"
+fi
+
+if [ ! -z "$NET_SBS_IN_PORT" ]
+then
+    ARGS="${ARGS} --net-sbs-in-port ${NET_SBS_IN_PORT}"
+fi
+
+if [ ! -z "$NET_SBS_JAERO_PORT" ]
+then
+    ARGS="${ARGS} --net-sbs-jaero-port ${NET_SBS_JAERO_PORT}"
+fi
+
+if [ ! -z "$NET_SBS_JAERO_IN_PORT" ]
+then
+    ARGS="${ARGS} --net-jaero-in-port ${NET_SBS_JAERO_IN_PORT}"
+fi
+
+if [ ! -z "$NET_VRS_INTERVAL" ]
+then
+    ARGS="${ARGS} --net-vrs-interval ${NET_VRS_INTERVAL}"
+fi
+
+if [ ! -z "$NET_VRS_PORT" ]
+then
+    ARGS="${ARGS} --net-vrs-port ${NET_VRS_PORT}"
+fi
+
+if [ ! -z "$NET_BEAST_REDUCE_INTERVAL" ]
+then
+    ARGS="${ARGS} --net-beast-reduce-interval ${NET_BEAST_REDUCE_INTERVAL}"
+fi
+
+if [ ! -z "$NET_BEAST_REDUCE_FILTER_DIST" ]
+then
+    ARGS="${ARGS} --net-beast-reduce-filter-dist ${NET_BEAST_REDUCE_FILTER_DIST}"
+fi
+
+if [ ! -z "$NET_BEAST_REDUCE_FILTER_ALL" ]
+then
+    ARGS="${ARGS} --net-beast-reduce-filter-all ${NET_BEAST_REDUCE_FILTER_ALL}"
+fi
+
+if [ ! -z "$NET_BEAST_REDUCE_OUT_PORT" ]
+then
+    ARGS="${ARGS} --net-beast-reduce-out-port ${NET_BEAST_REDUCE_OUT_PORT}"
+fi
+
+
+if [ ! -z "$BEAST_SERIAL" ]
+then
+    ARGS="${ARGS} --beast-serial ${BEAST_SERIAL}"
+fi
+
+if [ "$BEAST_DF1117_ON" = "yes" ]
+then
+    ARGS="${ARGS} --beast-df1117-on"
+fi
+
+if [ "$BEAST_MLAT_OFF" = "yes" ]
+then
+    ARGS="${ARGS} --beast-mlat-off"
+fi
+
+if [ "$BEAST_CRC_OFF" = "yes" ]
+then
+    ARGS="${ARGS} --beast-crc-off"
+fi
+
+if [ "$BEAST_DF045_ON" = "yes" ]
+then
+    ARGS="${ARGS} --beast-df045-on"
+fi
+
+if [ "$BEAST_FEC_OFF" = "yes" ]
+then
+    ARGS="${ARGS} --beast-fec-off"
+fi
+
+if [ "$BEAST_MODEAC" = "yes" ]
+then
+    ARGS="${ARGS} --beast-modeac"
+fi
+
+
+if [ ! -z "$IFILE" ]
+then
+    ARGS="${ARGS} --ifile ${IFILE}"
+fi
+
+if [ ! -z "$IFORMAT" ]
+then
+    ARGS="${ARGS} --iformat ${IFORMAT}"
+fi
+
+if [ "$THROTTLE" = "yes" ]
+then
+    ARGS="${ARGS} --throttle"
+fi
+
+
+if [ ! -z "$CUSTOM" ]
+then
+    ARGS="${ARGS} ${CUSTOM}"
+fi
 
 
 # Execute

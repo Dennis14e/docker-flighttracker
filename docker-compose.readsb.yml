@@ -8,7 +8,16 @@ services:
     devices:
       - /dev/bus/usb:/dev/bus/usb
     environment:
-      - ADSBX_UUID=
+      - DEVICE_TYPE=rtlsdr
+      - DEVICE=
+      - GAIN=-10
+      - PPM=0
+      - NET_RO_SIZE=1200
+      - NET_RO_INTERVAL=0.1
+      - NET_RO_PORT=30002
+      - NET_SBS_PORT=30003
+      - NET_BO_PORT=30005
+      - UUID=
 
   # optional
   web-light:

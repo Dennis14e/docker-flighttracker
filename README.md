@@ -86,14 +86,7 @@ docker run \
 
 ### Environment variables
 
-| Environment variable | Default                                                                                         | Description                         |
-|----------------------|-------------------------------------------------------------------------------------------------|-------------------------------------|
-| ADSBX_UUID           |                                                                                                 | ADS-B Exchange UUID (use `uuidgen`) |
-| PROGRAM_OPTIONS      | see [Dockerfile](https://github.com/Dennis14e/docker-flighttracker/blob/main/readsb/Dockerfile) | Program options                     |
-| RECEIVER_OPTIONS     | see [Dockerfile](https://github.com/Dennis14e/docker-flighttracker/blob/main/readsb/Dockerfile) | Receiver options                    |
-| DECODER_OPTIONS      | see [Dockerfile](https://github.com/Dennis14e/docker-flighttracker/blob/main/readsb/Dockerfile) | Decoder options                     |
-| NET_OPTIONS          | see [Dockerfile](https://github.com/Dennis14e/docker-flighttracker/blob/main/readsb/Dockerfile) | Network options                     |
-| JSON_OPTIONS         | see [Dockerfile](https://github.com/Dennis14e/docker-flighttracker/blob/main/readsb/Dockerfile) | JSON options                        |
+See `ENV`-lines in [Dockerfile](https://github.com/Dennis14e/docker-flighttracker/blob/main/readsb/Dockerfile).
 
 ### docker run
 
