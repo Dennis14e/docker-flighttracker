@@ -23,7 +23,7 @@ LOG_TIMESTAMPS="${LOG_TIMESTAMPS:-no}"
 # Validate
 if [ -z "$INPUT_TYPE" ] || [ -z "$INPUT_CONNECT_HOST" ] || [ -z "$INPUT_CONNECT_PORT" ] || [ -z "$LAT" ] || [ -z "$LON" ] || [ -z "$ALT" ] || [ -z "$USER" ] || [ -z "$SERVER_HOST" ] || [ -z "$SERVER_PORT" ]
 then
-    >&2 echo "Required environment variables are empty. exiting..."
+    >&2 echo "Required environment variables are empty. Exiting..."
     sleep 3
     exit 1
 fi
