@@ -422,14 +422,18 @@ then
     ARGS="${ARGS} --net-heartbeat ${NET_HEARTBEAT}"
 fi
 
-if [ ! -z "$NET_CONNECTION" ]
+if [ ! -z "$NET_CONNECTOR" ]
 then
-    ARGS="${ARGS} --net-connection ${NET_CONNECTION}"
+    # ; delimiter
+    for NET_CONNECTOR_i in ${NET_CONNECTOR//;/ }
+    do
+        ARGS="${ARGS} --net-connector ${NET_CONNECTOR_i}"
+    done
 fi
 
-if [ ! -z "$NET_CONNECTION_DELAY" ]
+if [ ! -z "$NET_CONNECTOR_DELAY" ]
 then
-    ARGS="${ARGS} --net-connection-delay ${NET_CONNECTION_DELAY}"
+    ARGS="${ARGS} --net-connector-delay ${NET_CONNECTOR_DELAY}"
 fi
 
 if [ "$NET_ONLY" = "yes" ]
