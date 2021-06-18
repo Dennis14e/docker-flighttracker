@@ -35,6 +35,9 @@ class GracefulKiller(object):
 
 
 # AdsbProcessor
+class AdsbError(Exception):
+    pass
+
 class AdsbProcessor(object):
     MSG_REGEX = r'^MSG,' \
         r'(?P<transmission>\d),' \
@@ -210,7 +213,7 @@ class Dump1090(object):
         except socket.timeout:
             pass
         except Exception as e:
-            log.error('Error receiving data from dump1090: \'{}\''.format(e))
+            raise AdsbError('Error receiving data from dump1090: \'{}\''.format(e))
 
         return ret
 
@@ -388,9 +391,14 @@ def main():
                 log.info('No aircrafts to be saved in InfluxDB')
 
 
-        msg = dump1090.receive()
-        if msg is not None:
-            ap.msg(msg)
+        try:
+            msg = dump1090.receive()
+        except AdsbError as e:
+            log.error(e)
+            killer.kill_now = True
+        else:
+            if msg is not None:
+                ap.msg(msg)
 
 
     # Exit

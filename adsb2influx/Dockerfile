@@ -11,7 +11,7 @@ RUN mkdir -p /app/python-packages && \
     pip install --no-cache-dir --prefix=/app/python-packages -r /app/requirements.txt
 
 
-# Base
+# Release
 FROM python:3.9-alpine3.13 AS release
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.authors="Dennis Neufeld <git@dneufeld.net>" \
@@ -31,14 +31,14 @@ COPY ./adsb2influx.py /app/adsb2influx.py
 RUN chmod +x /app/adsb2influx.py
 
 # ENV
-ENV DUMP1090_HOST=dump1090
-ENV DUMP1090_PORT=30003
-ENV INFLUX_URL=
-ENV INFLUX_TOKEN=
-ENV INFLUX_ORG=
-ENV INFLUX_BUCKET=adsb
-ENV INFLUX_MEASUREMENT=messages
-ENV SEND_INTERVAL=60
+ENV DUMP1090_HOST="dump1090" \
+    DUMP1090_PORT="30003" \
+    INFLUX_URL="" \
+    INFLUX_TOKEN="" \
+    INFLUX_ORG="" \
+    INFLUX_BUCKET="adsb" \
+    INFLUX_MEASUREMENT="messages" \
+    SEND_INTERVAL="60"
 
 # CMD
 CMD [ "sh", "-c", "python3 adsb2influx.py -dh $DUMP1090_HOST -dp $DUMP1090_PORT -iu $INFLUX_URL -it $INFLUX_TOKEN -io $INFLUX_ORG -ib $INFLUX_BUCKET -im $INFLUX_MEASUREMENT -si $SEND_INTERVAL" ]
