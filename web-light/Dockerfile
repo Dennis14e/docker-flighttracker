@@ -50,3 +50,6 @@ ENV REFRESH_RATE="250"
 ENV CENTER_LAT="45.0"
 ENV CENTER_LNG="9.0"
 ENV CENTER_RADIUS="500"
+
+# Healthcheck
+HEALTHCHECK CMD curl --fail http://localhost/ || exit 1
