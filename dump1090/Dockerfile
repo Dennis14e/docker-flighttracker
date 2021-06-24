@@ -7,7 +7,8 @@ RUN apk add --no-cache build-base git librtlsdr-dev
 # dump1090
 WORKDIR /app
 
-RUN git clone --depth 1 https://github.com/antirez/dump1090.git . && \
+RUN git clone https://github.com/antirez/dump1090.git . && \
+    git -c advice.detachedHead=false checkout de61bd564f1aa929bae414a70e421acd0b81789a && \
     make
 
 RUN sed -i 's/<head>/<head><title>{{TITLE}}<\/title>/g' /app/gmap.html && \
