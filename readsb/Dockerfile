@@ -8,7 +8,7 @@ RUN apk add --no-cache build-base git librtlsdr-dev ncurses-dev zlib-dev argp-st
 WORKDIR /app
 
 RUN git clone -b sid https://github.com/wiedehopf/readsb.git . && \
-    git -c advice.detachedHead=false checkout a307a5e130138b4b6b0fa0859db4543f0603a261 && \
+    git -c advice.detachedHead=false checkout 6b4cf3fc329df7431f35a6e1029b9db297bd6c4a && \
     mkdir patches
 
 COPY patches/*.patch patches/
