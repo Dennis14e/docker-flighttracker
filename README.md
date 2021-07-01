@@ -1,6 +1,6 @@
 # Docker Flighttracker
 
-[![Build stable images](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build-stable.yml/badge.svg)](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build-stable.yml)
+[![Build release images](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build-release.yml/badge.svg)](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build-release.yml)
 [![Build develop images](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build-develop.yml/badge.svg)](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build-develop.yml)
 
 

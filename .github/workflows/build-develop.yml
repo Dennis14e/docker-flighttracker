@@ -2,25 +2,23 @@ name: Build develop images
 
 on:
   push:
-    branches:
-      - main
-      - 'features/**'
+    branches-ignore:
+      - 'dependabot/**'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 120
     env:
-      GIT_REPO_OWNER: Dennis14e
       GIT_BRANCH: ""
-      DOCKER_PUSH: false
+      GITHUB_REPO_OWNER: Dennis14e
       DOCKER_HUB_USERNAME: dennis14e
       DOCKER_HUB_ORGANISATION: flighttracker
-      PLATFORMS: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/386
+      QEMU_PLATFORMS: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64,linux/386
     strategy:
       fail-fast: false
       matrix:
-        DOCKERIMAGE:
+        DOCKER_IMAGE:
           - adsb2influx
           - dump1090
           - fr24feed
@@ -28,16 +26,8 @@ jobs:
           - readsb
           - web-light
     steps:
-      - name: Set DOCKER_PUSH if repository owner is $GIT_REPO_OWNER
-        if: github.repository_owner == env.GIT_REPO_OWNER
-        run: echo DOCKER_PUSH=true >> $GITHUB_ENV
-
       - name: Set GIT_BRANCH
-        run: echo GIT_BRANCH="$(echo ${GITHUB_REF#refs/heads/} | tr _/ -)" >> $GITHUB_ENV
-
-      - name: Set GIT_BRANCH to develop if main
-        if: env.GIT_BRANCH == 'main'
-        run: echo GIT_BRANCH=develop >> $GITHUB_ENV
+        run: echo "GIT_BRANCH=$(echo ${GITHUB_REF#refs/heads/} | tr _/ -)" >> $GITHUB_ENV
 
       - name: Checkout code
         uses: actions/checkout@v2
@@ -46,35 +36,44 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-${{ matrix.DOCKERIMAGE }}-${{ env.GIT_BRANCH }}-${{ github.sha }}
-          restore-keys: ${{ runner.os }}-${{ matrix.DOCKERIMAGE }}-${{ env.GIT_BRANCH }}-
+          key: ${{ runner.os }}-${{ matrix.DOCKER_IMAGE }}-${{ env.GIT_BRANCH }}-${{ github.sha }}
+          restore-keys: ${{ runner.os }}-${{ matrix.DOCKER_IMAGE }}-${{ env.GIT_BRANCH }}-
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
         with:
-          platforms: ${{ env.PLATFORMS }}
+          platforms: ${{ env.QEMU_PLATFORMS }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
       - name: Login to Docker Hub
         uses: docker/login-action@v1
-        if: env.DOCKER_PUSH == 'true'
         with:
           username: ${{ env.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Set up Docker metadata
+        id: meta
+        uses: docker/metadata-action@v3.3.0
+        with:
+          images: ${{ env.DOCKER_HUB_ORGANISATION }}/${{ matrix.DOCKER_IMAGE }}
+          flavor: latest=false
+          tags: |
+            type=edge,branch=main
+            type=raw,value={{branch}}
+
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: ${{ matrix.DOCKERIMAGE }}
+          context: ${{ matrix.DOCKER_IMAGE }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
-          file: ${{ matrix.DOCKERIMAGE }}/Dockerfile
-          platforms: ${{ env.PLATFORMS }}
+          file: ${{ matrix.DOCKER_IMAGE }}/Dockerfile
+          platforms: ${{ env.QEMU_PLATFORMS }}
           pull: true
-          push: ${{ env.DOCKER_PUSH }}
-          tags: ${{ env.DOCKER_HUB_ORGANISATION }}/${{ matrix.DOCKERIMAGE }}:${{ env.GIT_BRANCH }}
+          push: ${{ github.repository_owner == env.GITHUB_REPO_OWNER }}
+          tags: ${{ steps.meta.outputs.tags }}
 
       - name: Move cache
         run: |
