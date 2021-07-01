@@ -29,6 +29,10 @@ jobs:
       - name: Set GIT_BRANCH
         run: echo "GIT_BRANCH=$(echo ${GITHUB_REF#refs/heads/} | tr _/ -)" >> $GITHUB_ENV
 
+      - name: Set GIT_BRANCH to edge if main
+        if: env.GIT_BRANCH == 'main'
+        run: echo "GIT_BRANCH=edge" >> $GITHUB_ENV
+
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -59,9 +63,7 @@ jobs:
         with:
           images: ${{ env.DOCKER_HUB_ORGANISATION }}/${{ matrix.DOCKER_IMAGE }}
           flavor: latest=false
-          tags: |
-            type=edge,branch=main
-            type=raw,value={{branch}}
+          tags: type=raw,value=${{ env.GIT_BRANCH }}
 
       - name: Build and push
         uses: docker/build-push-action@v2
