@@ -7,6 +7,7 @@ on:
 
 jobs:
   build:
+    name: Build image
     runs-on: ubuntu-latest
     timeout-minutes: 120
     env:
@@ -34,25 +35,25 @@ jobs:
         run: echo "GIT_BRANCH=edge" >> $GITHUB_ENV
 
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
 
       - name: Set up cache
-        uses: actions/cache@v2
+        uses: actions/cache@v2.1.6
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-${{ matrix.DOCKER_IMAGE }}-${{ env.GIT_BRANCH }}-${{ github.sha }}
           restore-keys: ${{ runner.os }}-${{ matrix.DOCKER_IMAGE }}-${{ env.GIT_BRANCH }}-
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v1.2.0
         with:
           platforms: ${{ env.QEMU_PLATFORMS }}
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+        uses: docker/setup-buildx-action@v1.5.0
 
       - name: Login to Docker Hub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v1.10.0
         with:
           username: ${{ env.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -66,7 +67,7 @@ jobs:
           tags: type=raw,value=${{ env.GIT_BRANCH }}
 
       - name: Build and push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v2.6.1
         with:
           context: ${{ matrix.DOCKER_IMAGE }}
           cache-from: type=local,src=/tmp/.buildx-cache
