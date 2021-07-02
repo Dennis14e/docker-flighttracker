@@ -24,7 +24,7 @@ jobs:
           - fr24feed
           - mlat-client
           - readsb
-          - web-light
+          - readsb-web
     steps:
       - name: Set GIT_BRANCH
         run: echo "GIT_BRANCH=$(echo ${GITHUB_REF#refs/heads/} | tr _/ -)" >> $GITHUB_ENV

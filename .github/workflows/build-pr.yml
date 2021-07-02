@@ -19,7 +19,7 @@ jobs:
           - fr24feed
           - mlat-client
           - readsb
-          - web-light
+          - readsb-web
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

@@ -130,10 +130,10 @@ docker run \
 ```
 
 
-## Image "web-light"
-[![Docker Pulls](https://img.shields.io/docker/pulls/flighttracker/web-light) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/flighttracker/web-light/latest)](https://hub.docker.com/r/flighttracker/web-light)
+## Image "readsb-web"
+[![Docker Pulls](https://img.shields.io/docker/pulls/flighttracker/readsb-web) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/flighttracker/readsb-web/latest)](https://hub.docker.com/r/flighttracker/readsb-web)
 
-web-light is only compatible with readsb.
+readsb-web is only compatible with readsb.
 
 ### Environment variables
 
@@ -156,7 +156,7 @@ docker run \
   -e CENTER_LAT=REPLACE \
   -e CENTER_LNG=REPLACE \
   -e CENTER_RANGE=REPLACE \
-  flighttracker/web-light:latest
+  flighttracker/readsb-web:latest
 ```
 
 

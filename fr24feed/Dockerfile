@@ -1,16 +1,18 @@
 # Builder
 FROM alpine:3.13 AS builder
 
-# fr24feed
+# Workdir
 WORKDIR /app
 
+# Copy downloader
 COPY dl-fr24feed.sh /tmp/dl-fr24feed.sh
 
-RUN chmod 777 /tmp/dl-fr24feed.sh && \
+# Download fr24feed
+RUN chmod +x /tmp/dl-fr24feed.sh && \
     /tmp/dl-fr24feed.sh
 
 
-# Base
+# Release
 FROM alpine:3.13 AS release
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.authors="Dennis Neufeld <git@dneufeld.net>" \
@@ -21,28 +23,28 @@ LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
 # Packages
 RUN apk add --no-cache bash sed libc6-compat libstdc++6
 
-# fr24feed
+# Workdir
 WORKDIR /usr/lib/fr24
 
+# Copy files
 COPY --from=builder /app /usr/lib/fr24
-
 COPY entrypoint.sh /entrypoint.sh
 COPY fr24feed.ini /etc/fr24feed.ini
 
-RUN chmod 777 /entrypoint.sh /usr/lib/fr24/fr24feed
+RUN chmod +x /entrypoint.sh /usr/lib/fr24/fr24feed
 RUN chmod 644 /etc/fr24feed.ini
 
 # ENV
-ENV SHARING_KEY=
-ENV DUMP1090_HOST=dump1090:30002
-ENV RECEIVER=avr-tcp
-ENV BS=no
-ENV RAW=no
-ENV LOGMODE=0
-ENV WINDOWMODE=0
-ENV MPX=no
-ENV MLAT=yes
-ENV MLAT_WITHOUT_GPS=yes
+ENV SHARING_KEY="" \
+    DUMP1090_HOST="dump1090:30002" \
+    RECEIVER="avr-tcp" \
+    BS="no" \
+    RAW="no" \
+    LOGMODE="0" \
+    WINDOWMODE="0" \
+    MPX="no" \
+    MLAT="yes" \
+    MLAT_WITHOUT_GPS="yes"
 
 # Expose
 EXPOSE 8754
@@ -50,5 +52,5 @@ EXPOSE 8754
 # Entrypoint
 ENTRYPOINT [ "/entrypoint.sh" ]
 
-# CMD
+# Command
 CMD [ "/usr/lib/fr24/fr24feed" ]

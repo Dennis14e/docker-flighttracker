@@ -4,20 +4,22 @@ FROM alpine:3.13 AS builder
 # Packages
 RUN apk add --no-cache build-base git librtlsdr-dev ncurses-dev zlib-dev argp-standalone
 
-# readsb
+# Workdir
 WORKDIR /app
 
+# Get readsb
 RUN git clone -b sid https://github.com/wiedehopf/readsb.git . && \
-    git -c advice.detachedHead=false checkout 6b4cf3fc329df7431f35a6e1029b9db297bd6c4a && \
+    git -c advice.detachedHead=false checkout 7cf5369e06a26a252916a871c4117da93bd9970f && \
     mkdir patches
 
 COPY patches/*.patch patches/
 
+# Apply patches and compile
 RUN git apply patches/*.patch && \
     make readsb RTLSDR=yes
 
 
-# Base
+# Release
 FROM alpine:3.13 AS release
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.authors="Dennis Neufeld <git@dneufeld.net>" \
@@ -28,16 +30,16 @@ LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
 # Packages
 RUN apk add --no-cache bash rtl-sdr ncurses zlib
 
-# readsb
+# Workdir
 WORKDIR /app
 
-COPY entrypoint.sh /entrypoint.sh
 COPY --from=builder /app/readsb /app/readsb
+COPY entrypoint.sh /entrypoint.sh
 
 RUN chmod +x /entrypoint.sh /app/readsb && \
     mkdir /data
 
-# ENV
+# Environment
 ENV LAT="" \
     LON="" \
     MAX_RANGE="360" \
@@ -152,12 +154,8 @@ ENV LAT="" \
     THROTTLE="no" \
     CUSTOM=""
 
-
-# Expose
-# Don't use because ports are user-defined
-
 # Entrypoint
 ENTRYPOINT [ "/entrypoint.sh" ]
 
-# CMD
+# Command
 CMD [ "sh", "-c", "/app/readsb" ]

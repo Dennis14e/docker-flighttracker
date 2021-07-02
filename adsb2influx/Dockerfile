@@ -22,15 +22,14 @@ LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
 # Workdir
 WORKDIR /app
 
-# Packages
+# Copy files
 COPY --from=builder /app/python-packages /usr/local
-
-# adsb2influx
 COPY ./adsb2influx.py /app/adsb2influx.py
 
+# Permissions
 RUN chmod +x /app/adsb2influx.py
 
-# ENV
+# Environment
 ENV DUMP1090_HOST="dump1090" \
     DUMP1090_PORT="30003" \
     INFLUX_URL="" \
@@ -40,5 +39,5 @@ ENV DUMP1090_HOST="dump1090" \
     INFLUX_MEASUREMENT="messages" \
     SEND_INTERVAL="60"
 
-# CMD
+# Command
 CMD [ "sh", "-c", "python3 adsb2influx.py -dh $DUMP1090_HOST -dp $DUMP1090_PORT -iu $INFLUX_URL -it $INFLUX_TOKEN -io $INFLUX_ORG -ib $INFLUX_BUCKET -im $INFLUX_MEASUREMENT -si $SEND_INTERVAL" ]

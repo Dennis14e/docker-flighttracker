@@ -20,9 +20,9 @@ services:
       - UUID=
 
   # optional
-  web-light:
-    # build: web-light
-    image: flighttracker/web-light:latest
+  readsb-web:
+    # build: readsb-web
+    image: flighttracker/readsb-web:latest
     restart: unless-stopped
     depends_on:
       - readsb
