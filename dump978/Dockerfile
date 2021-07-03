@@ -22,7 +22,6 @@ RUN mkdir soapy-rtlsdr/build && \
     make install
 
 # Checkout dump978
-RUN ls -la
 RUN git clone -b master https://github.com/flightaware/dump978.git dump978
 RUN cd dump978 && \
     git -c advice.detachedHead=false checkout c1e37f4acd7e47c46ca312a4016128aecfd03630

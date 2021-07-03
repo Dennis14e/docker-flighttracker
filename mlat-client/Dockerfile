@@ -11,7 +11,7 @@ WORKDIR /app
 RUN mkdir mlat-client && \
     cd mlat-client && \
     git clone -b master https://github.com/wiedehopf/mlat-client.git . && \
-    git -c advice.detachedHead=false checkout c71c179a3cefd7f0f806fbf5aeca4f170cbecd5f && \
+    git -c advice.detachedHead=false checkout 6faf42052ce461ded1c38cdb4b2127e32b45788b && \
     mkdir -p /app/python-packages && \
     python3 setup.py install --prefix=/app/python-packages
 
