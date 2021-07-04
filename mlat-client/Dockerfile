@@ -1,5 +1,5 @@
 # Builder
-FROM python:3.9-alpine3.13 AS builder
+FROM python:3.9-alpine3.14 AS builder
 
 # Packages
 RUN apk add --no-cache build-base git
@@ -20,7 +20,7 @@ RUN rm -rf /app/mlat-client/.git*
 
 
 # Release
-FROM python:3.9-alpine3.13 AS release
+FROM python:3.9-alpine3.14 AS release
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.authors="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.url="https://github.com/Dennis14e/docker-flightradar" \

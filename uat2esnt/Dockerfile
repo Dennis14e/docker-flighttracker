@@ -1,5 +1,5 @@
 # Builder
-FROM alpine:3.13 AS builder
+FROM alpine:3.14 AS builder
 
 # Packages
 RUN apk add --no-cache build-base git
@@ -16,7 +16,7 @@ RUN make uat2esnt
 
 
 # Release
-FROM alpine:3.13 AS release
+FROM alpine:3.14 AS release
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.authors="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.url="https://github.com/Dennis14e/docker-flightradar" \
