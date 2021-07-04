@@ -5,16 +5,14 @@ FROM flighttrackr/soapysdr-rtlsdr:alpine3.14 AS builder
 RUN apk add --no-cache build-base cmake git librtlsdr-dev boost-dev
 
 # Workdir
-WORKDIR /app
+WORKDIR /usr/src/builder
 
 # Checkout dump978
-RUN git clone -b master https://github.com/flightaware/dump978.git dump978
-RUN cd dump978 && \
+RUN git clone -b master https://github.com/flightaware/dump978.git . && \
     git -c advice.detachedHead=false checkout c1e37f4acd7e47c46ca312a4016128aecfd03630
 
 # Compile dump978
-RUN cd dump978 && \
-    make -j 2 dump978-fa
+RUN make -j 2 dump978-fa
 
 
 # Release
@@ -33,7 +31,7 @@ RUN apk add --no-cache bash librtlsdr boost-system boost-program_options boost-r
 WORKDIR /app
 
 # Copy files
-COPY --from=builder /app/dump978/dump978-fa /app/dump978
+COPY --from=builder /usr/src/builder/dump978-fa /app/dump978
 COPY entrypoint.sh /entrypoint.sh
 
 # Permissions
