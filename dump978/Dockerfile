@@ -14,7 +14,7 @@ RUN cd dump978 && \
 
 # Compile dump978
 RUN cd dump978 && \
-    make dump978-fa
+    make -j 2 dump978-fa
 
 
 # Release
