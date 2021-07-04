@@ -1,25 +1,11 @@
 # Builder
-FROM alpine:3.14 AS builder
+FROM flighttrackr/soapysdr-rtlsdr:alpine3.14 AS builder
 
 # Packages
-RUN apk add --no-cache build-base cmake git librtlsdr-dev boost-dev && \
-    apk add --no-cache --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing/ soapy-sdr-dev
+RUN apk add --no-cache build-base cmake git librtlsdr-dev boost-dev
 
 # Workdir
 WORKDIR /app
-
-# Checkout SoapyRTLSDR
-RUN git clone -b master https://github.com/pothosware/SoapyRTLSDR.git soapy-rtlsdr && \
-    cd soapy-rtlsdr && \
-    git -c advice.detachedHead=false checkout 53ee8f4a19dd97011a569cfc2e6f7ad63f896100
-
-# Compile SoapyRTLSDR
-RUN mkdir soapy-rtlsdr/build && \
-    mkdir soapy-rtlsdr/install && \
-    cd soapy-rtlsdr/build && \
-    cmake ../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=../install && \
-    make && \
-    make install
 
 # Checkout dump978
 RUN git clone -b master https://github.com/flightaware/dump978.git dump978
@@ -32,7 +18,8 @@ RUN cd dump978 && \
 
 
 # Release
-FROM alpine:3.14 AS release
+FROM flighttrackr/soapysdr-rtlsdr:alpine3.14 AS release
+
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.authors="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.url="https://github.com/Dennis14e/docker-flightradar" \
@@ -40,14 +27,12 @@ LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.licenses="MIT"
 
 # Packages
-RUN apk add --no-cache bash librtlsdr boost-system boost-program_options boost-regex boost-filesystem && \
-    apk add --no-cache --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing/ soapy-sdr
+RUN apk add --no-cache bash librtlsdr boost-system boost-program_options boost-regex boost-filesystem
 
 # Workdir
 WORKDIR /app
 
 # Copy files
-COPY --from=builder /app/soapy-rtlsdr/install/ /usr/local/
 COPY --from=builder /app/dump978/dump978-fa /app/dump978
 COPY entrypoint.sh /entrypoint.sh
 
