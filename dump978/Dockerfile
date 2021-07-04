@@ -1,5 +1,5 @@
 # Builder
-FROM flighttrackr/soapysdr-rtlsdr:alpine3.14 AS builder
+FROM flighttrackr/soapysdr-rtlsdr:alpine3.13 AS builder
 
 # Packages
 RUN apk add --no-cache build-base cmake git librtlsdr-dev boost-dev
@@ -16,7 +16,7 @@ RUN make -j 2 dump978-fa
 
 
 # Release
-FROM flighttrackr/soapysdr-rtlsdr:alpine3.14 AS release
+FROM flighttrackr/soapysdr-rtlsdr:alpine3.13 AS release
 
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.authors="Dennis Neufeld <git@dneufeld.net>" \
