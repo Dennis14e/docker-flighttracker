@@ -20,7 +20,6 @@ jobs:
       matrix:
         DOCKER_IMAGE:
           - adsb2influx
-          - dump978
           - dump1090
           - fr24feed
           - mlat-client

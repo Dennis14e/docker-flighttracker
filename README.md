@@ -141,6 +141,10 @@ docker run \
 ## Image "dump978"
 [![Docker Pulls](https://img.shields.io/docker/pulls/flighttracker/dump978) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/flighttracker/dump978/latest)](https://hub.docker.com/r/flighttracker/dump978)
 
+### Warning
+
+dump978 is currently not supported due to unexplained problems building Docker images.
+
 ### Environment variables
 
 See `ENV`-lines in [Dockerfile](https://github.com/Dennis14e/docker-flighttracker/blob/main/dump978/Dockerfile).
