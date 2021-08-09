@@ -10,7 +10,7 @@ case `uname -m` in
         ;;
 
     armv6l|armv7l|aarch64)
-        archive="https://repo-feed.flightradar24.com/rpi_binaries/fr24feed_1.0.27-2_armhf.tgz"
+        archive="https://repo-feed.flightradar24.com/rpi_binaries/fr24feed_1.0.28-1_armhf.tgz"
         ;;
 
     *)
