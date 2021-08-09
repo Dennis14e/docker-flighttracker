@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.0.2
+
+- Update readsb
+- Update fr24feed (arm)
+
 ## v1.0.1
 
 - Update readsb
