@@ -9,7 +9,7 @@ WORKDIR /app
 
 # Get readsb
 RUN git clone -b sid https://github.com/wiedehopf/readsb.git . && \
-    git -c advice.detachedHead=false checkout 06925b4be7fc34e47acf987b0dc1d809c6fce16a && \
+    git -c advice.detachedHead=false checkout a29c4066c21eeedc45c3925942af7f44471bc32b && \
     mkdir patches
 
 COPY patches/*.patch patches/
