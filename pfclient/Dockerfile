@@ -20,6 +20,12 @@ LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.source="https://github.com/Dennis14e/docker-flighttracker" \
       org.opencontainers.image.licenses="MIT"
 
+# ARM architecture
+COPY arch.sh /tmp/arch.sh
+RUN chmod +x /tmp/arch.sh && \
+    /tmp/arch.sh && \
+    rm /tmp/arch.sh
+
 # Workdir
 WORKDIR /app
 

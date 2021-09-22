@@ -36,10 +36,6 @@ jobs:
         if: env.GIT_BRANCH == 'main'
         run: echo "GIT_BRANCH=edge" >> $GITHUB_ENV
 
-      - name: Remove linux/arm/v7, linux/arm64 from pfclient build
-        if: matrix.DOCKER_IMAGE == 'pfclient'
-        run: echo "QEMU_PLATFORMS=${{ env.QEMU_PLATFORMS }}" | sed -e 's/linux\/arm\/v7//g' | sed -e 's/linux\/arm64//g' | sed -e 's/,,/,/g' | sed -e 's/,$//g' >> $GITHUB_ENV
-
       - name: Checkout code
         uses: actions/checkout@v2.3.4
 
