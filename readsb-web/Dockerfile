@@ -26,8 +26,8 @@ RUN find /app -type d -exec chmod 755 {} \; && \
 FROM nginx:1.21-alpine AS release
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.authors="Dennis Neufeld <git@dneufeld.net>" \
-      org.opencontainers.image.url="https://github.com/Dennis14e/docker-flightradar" \
-      org.opencontainers.image.source="https://github.com/Dennis14e/docker-flightradar" \
+      org.opencontainers.image.url="https://github.com/Dennis14e/docker-flighttracker" \
+      org.opencontainers.image.source="https://github.com/Dennis14e/docker-flighttracker" \
       org.opencontainers.image.licenses="MIT"
 
 # Workdir

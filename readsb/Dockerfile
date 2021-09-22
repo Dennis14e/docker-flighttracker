@@ -23,8 +23,8 @@ RUN git apply patches/*.patch && \
 FROM alpine:3.14 AS release
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.authors="Dennis Neufeld <git@dneufeld.net>" \
-      org.opencontainers.image.url="https://github.com/Dennis14e/docker-flightradar" \
-      org.opencontainers.image.source="https://github.com/Dennis14e/docker-flightradar" \
+      org.opencontainers.image.url="https://github.com/Dennis14e/docker-flighttracker" \
+      org.opencontainers.image.source="https://github.com/Dennis14e/docker-flighttracker" \
       org.opencontainers.image.licenses="MIT"
 
 # Packages
