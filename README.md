@@ -32,6 +32,7 @@
 
 ### Feeders
 - [fr24feed](https://www.flightradar24.com/share-your-data)
+- [planefinder](https://planefinder.net/coverage)
 - [adsb2influx](https://github.com/slintak/adsb2influx) (own fork, only for InfluxDB 2.0)
 - [mlat-client](https://github.com/wiedehopf/mlat-client)
 
@@ -249,6 +250,36 @@ docker run \
   -e SHARING_KEY=REPLACE \
   -e DUMP1090_HOST=dump1090:30002 \
   flighttracker/fr24feed:latest
+```
+
+
+## Image "pfclient"
+[![Docker Pulls](https://img.shields.io/docker/pulls/flighttracker/pfclient) ![Docker Image Size (tag)](https://img.shields.io/docker/image-size/flighttracker/pfclient/latest)](https://hub.docker.com/r/flighttracker/pfclient)
+
+pfclient is compatible with dump1090 and readsb.
+
+### Environment variables
+
+| Environment variable | Default  | Description             |
+|----------------------|----------|-------------------------|
+| SHARING_KEY          |          | Planefinder sharing key |
+| DUMP1090_HOST        | dump1090 | dump1090 Host           |
+| DUMP1090_PORT        | 30002    | dump1090 Port           |
+| LAT                  |          | Latitude of receiver    |
+| LON                  |          | Longitude of receiver   |
+
+### docker run
+
+```
+docker run \
+  -it --rm \
+  -p 30053:30053 \
+  -e SHARING_KEY=REPLACE \
+  -e DUMP1090_HOST=dump1090 \
+  -e DUMP1090_PORT=30002 \
+  -e LAT=REPLACE \
+  -e LON=REPLACE \
+  flighttracker/pfclient:latest
 ```
 
 

@@ -24,6 +24,7 @@ jobs:
           - dump1090
           - fr24feed
           - mlat-client
+          - pfclient
           - readsb
           - readsb-web
           - uat2esnt

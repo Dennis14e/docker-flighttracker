@@ -46,6 +46,20 @@ services:
       - SHARING_KEY=
       - DUMP1090_HOST=readsb:30002
 
+  # optional
+  pfclient:
+    # build: pfclient
+    image: flighttracker/pfclient:latest
+    restart: unless-stopped
+    depends_on:
+      - dump1090
+    ports:
+      - "30053:30053"
+    environment:
+      - SHARING_KEY=
+      - DUMP1090_HOST=readsb
+      - DUMP1090_PORT=30002
+
 #  # optional
 #  adsb2influx:
 #    # build: adsb2influx
