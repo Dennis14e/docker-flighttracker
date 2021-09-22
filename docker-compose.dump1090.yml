@@ -40,6 +40,8 @@ services:
       - SHARING_KEY=
       - DUMP1090_HOST=dump1090
       - DUMP1090_PORT=30002
+      - LAT=
+      - LON=
 
 #  # optional
 #  adsb2influx:

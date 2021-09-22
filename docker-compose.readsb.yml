@@ -59,6 +59,8 @@ services:
       - SHARING_KEY=
       - DUMP1090_HOST=readsb
       - DUMP1090_PORT=30002
+      - LAT=
+      - LON=
 
 #  # optional
 #  adsb2influx:
