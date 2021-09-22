@@ -21,7 +21,7 @@ LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.licenses="MIT"
 
 # Packages
-RUN apk add --no-cache bash sed gcompat
+RUN apk add --no-cache bash sed libc6-compat gcompat
 
 # Workdir
 WORKDIR /app

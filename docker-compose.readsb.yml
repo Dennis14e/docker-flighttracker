@@ -52,7 +52,7 @@ services:
     image: flighttracker/pfclient:latest
     restart: unless-stopped
     depends_on:
-      - dump1090
+      - readsb
     ports:
       - "30053:30053"
     environment:
