@@ -20,7 +20,10 @@ LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.source="https://github.com/Dennis14e/docker-flighttracker" \
       org.opencontainers.image.licenses="MIT"
 
-# ARM architecture
+# Debian
+ARG DEBIAN_FRONTEND="noninteractive"
+
+# arm64 support
 COPY arch.sh /tmp/arch.sh
 RUN chmod +x /tmp/arch.sh && \
     /tmp/arch.sh && \
