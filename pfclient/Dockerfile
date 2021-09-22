@@ -13,15 +13,12 @@ RUN chmod +x /tmp/dl-pfclient.sh && \
 
 
 # Release
-FROM alpine:3.14 AS release
+FROM debian:bullseye-slim AS release
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.authors="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.url="https://github.com/Dennis14e/docker-flighttracker" \
       org.opencontainers.image.source="https://github.com/Dennis14e/docker-flighttracker" \
       org.opencontainers.image.licenses="MIT"
-
-# Packages
-RUN apk add --no-cache bash sed libc6-compat gcompat
 
 # Workdir
 WORKDIR /app
