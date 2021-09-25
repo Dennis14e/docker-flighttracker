@@ -24,7 +24,7 @@ LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
 ARG DEBIAN_FRONTEND="noninteractive"
 
 # arm64
-RUN if [ `uname -m` = "aarch64" ] \
+RUN if [ `uname -m` = "aarch64" ]; \
     then \
         dpkg --add-architecture armhf && \
         apt-get update && \
