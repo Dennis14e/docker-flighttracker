@@ -13,16 +13,15 @@ RUN chmod +x /tmp/dl-pfclient.sh && \
 
 
 # Release
-FROM alpine:3.14 AS release
+FROM ubuntu:20.04 AS release
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.authors="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.url="https://github.com/Dennis14e/docker-flighttracker" \
       org.opencontainers.image.source="https://github.com/Dennis14e/docker-flighttracker" \
       org.opencontainers.image.licenses="MIT"
 
-# Packages
-RUN [ `uname -m` = "aarch64" ] && echo "armhf" > /etc/apk/arch; \
-    apk add --no-cache bash sed libc6-compat gcompat
+# APT
+ARG DEBIAN_FRONTEND="noninteractive"
 
 # Workdir
 WORKDIR /app
