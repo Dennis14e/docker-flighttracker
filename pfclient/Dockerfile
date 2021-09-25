@@ -24,12 +24,12 @@ LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
 ARG DEBIAN_FRONTEND="noninteractive"
 
 # arm64
-RUN if [ `uname -m` = "aarch64" ]; \
+RUN if [ `uname -m` = "aarch64" ] ; \
     then \
         dpkg --add-architecture armhf && \
         apt-get update && \
         apt-get install --no-install-recommends -y libc6:armhf && \
-        rm -rf /var/lib/apt/lists/* \
+        rm -rf /var/lib/apt/lists/* ; \
     fi
 
 # Workdir
