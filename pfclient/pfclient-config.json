@@ -3,7 +3,7 @@
     "tcp_port": "{{DUMP1090_PORT}}",
     "select_timeout": "10",
     "data_upload_interval": "10",
-    "connection_type": "1",
+    "connection_type": "4",
     "aircraft_timeout": "30",
     "data_format": "1",
     "latitude": "{{LAT}}",
