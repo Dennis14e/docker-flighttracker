@@ -13,21 +13,17 @@ RUN chmod +x /tmp/dl-pfclient.sh && \
 
 
 # Release
-FROM debian:bullseye-slim AS release
+FROM alpine:3.14 AS release
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.authors="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.url="https://github.com/Dennis14e/docker-flighttracker" \
       org.opencontainers.image.source="https://github.com/Dennis14e/docker-flighttracker" \
       org.opencontainers.image.licenses="MIT"
 
-# Debian
-ARG DEBIAN_FRONTEND="noninteractive"
-
-# arm64 support
-COPY arch.sh /tmp/arch.sh
-RUN chmod +x /tmp/arch.sh && \
-    /tmp/arch.sh && \
-    rm /tmp/arch.sh
+# Packages
+RUN apk add --no-cache bash sed; \
+    [ `uname -m` = "aarch64" ] && echo "armhf" > /etc/apk/arch; \
+    apk add --no-cache libc6-compat gcompat
 
 # Workdir
 WORKDIR /app
