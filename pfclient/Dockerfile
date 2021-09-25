@@ -13,7 +13,7 @@ RUN chmod +x /tmp/dl-pfclient.sh && \
 
 
 # Release
-FROM ubuntu:20.04 AS release
+FROM debian:11-slim AS release
 LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.authors="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.url="https://github.com/Dennis14e/docker-flighttracker" \
@@ -22,6 +22,15 @@ LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
 
 # APT
 ARG DEBIAN_FRONTEND="noninteractive"
+
+# arm64
+RUN if [ `uname -m` = "aarch64" ] \
+    then \
+        dpkg --add-architecture armhf && \
+        apt-get update && \
+        apt-get install --no-install-recommends -y libc6:armhf && \
+        rm -rf /var/lib/apt/lists/* \
+    fi
 
 # Workdir
 WORKDIR /app
