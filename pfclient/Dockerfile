@@ -21,15 +21,14 @@ LABEL maintainer="Dennis Neufeld <git@dneufeld.net>" \
       org.opencontainers.image.licenses="MIT"
 
 # Packages
-RUN apk add --no-cache bash sed; \
-    [ `uname -m` = "aarch64" ] && echo "armhf" > /etc/apk/arch; \
-    apk add --no-cache libc6-compat gcompat
+RUN [ `uname -m` = "aarch64" ] && echo "armhf" > /etc/apk/arch; \
+    apk add --no-cache bash sed libc6-compat gcompat
 
 # Workdir
 WORKDIR /app
 
 # Copy files
-COPY --from=builder /app/* /app/
+COPY --from=builder /app/pfclient /app/
 COPY entrypoint.sh /entrypoint.sh
 COPY pfclient-config.json /app/
 
