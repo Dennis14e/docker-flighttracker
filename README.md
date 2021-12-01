@@ -4,6 +4,11 @@
 [![Build develop images](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build-develop.yml/badge.svg)](https://github.com/Dennis14e/docker-flighttracker/actions/workflows/build-develop.yml)
 
 
+## Attention!
+This project is slowly being replaced by my new project [flighttrackr](https://github.com/flighttrackr).
+Many images can already be found there.
+
+
 ## Supported architectures
 - linux/amd64
 - linux/arm/v6
