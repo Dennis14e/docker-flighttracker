@@ -1,1 +1,1 @@
-influxdb-client==1.24.0
+influxdb-client==1.25.0
